@@ -25,4 +25,5 @@
     <string name="CorreoRegistro">email</string>
     <string name="AccederLogin">log in</string>
     <string name="RegistroLogin">Register</string>
+    <string name="GuardarCambios">Save changes</string>
 </resources>

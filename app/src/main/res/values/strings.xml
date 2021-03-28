@@ -17,6 +17,7 @@
     <!--Tambien en FragmentReservas-->
     <string name="desde">desde</string>
     <string name="hasta">hasta</string>
+    <string name="GuardarCambios">Guardar cambios</string>
     <!--Menu opciones configuracion de perfil-->
     <string-array name="OpcionesPerfil">
         <item>Idioma</item>
