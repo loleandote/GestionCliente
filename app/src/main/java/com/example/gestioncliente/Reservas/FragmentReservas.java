@@ -84,7 +84,7 @@ public class FragmentReservas extends Fragment {
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
-                getActivity().finishAffinity();
+               // getActivity().finishAffinity();
                 // Handle the back button event
 
             }

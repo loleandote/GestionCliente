@@ -60,13 +60,17 @@ public class FragmentIdiomas extends Fragment {
                 Locale locale= Locale.getDefault();
                 String idioma="";
                 if (IdiomaPulsado ==0) {
-                    locale = Locale.getDefault();
+                    locale = new Locale("es");
+                    idioma="es";
                     // actividadConUsuario.beginPayment();
                 }else {
                     locale = Locale.UK;
                     idioma="en";
                 }
+
                 actividadConUsuario.CambiarIdioma(idioma);
+                String texto = actividadConUsuario.propiedades.getString("Idioma","");
+                System.out.println("Idioma "+texto+locale.getDisplayName());
                 Configuration config =new Configuration();
                 config.locale = locale;
                 getActivity().getResources().updateConfiguration(config, getActivity().getResources().getDisplayMetrics());

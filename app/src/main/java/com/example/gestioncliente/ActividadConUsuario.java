@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -41,15 +42,15 @@ public class ActividadConUsuario extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actividad_con_usuario);
-        try {
-           /* Intent serviceConfig = new Intent(this, PayPalService.class);
+        /*try {
+            Intent serviceConfig = new Intent(this, PayPalService.class);
             serviceConfig.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
-            startService(serviceConfig);*/
+            startService(serviceConfig);
         }catch(Exception ex){
             System.out.println(ex.getCause());
-        }
+        }*/
 
-        propiedades =getBaseContext().getSharedPreferences("Idiomas",MODE_PRIVATE);
+        propiedades =getBaseContext().getSharedPreferences("Idiomas",Context.MODE_PRIVATE);
         retrofit= Cliente.obtenerCliente();
         int id=1;
         id = getIntent().getIntExtra("usuario",0);
@@ -145,7 +146,7 @@ public class ActividadConUsuario extends AppCompatActivity {
     }
 
     public void CambiarIdioma(String idioma){
-        SharedPreferences sharedPref = getSharedPreferences("MyData",MODE_PRIVATE);
+        SharedPreferences sharedPref = getSharedPreferences("Idiomas",MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("Idioma",idioma);
         editor.commit();

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FuerzaLol</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--Textos FragmentLogin FragmentRegistro-->
+    <string name="NombreLogin">nombre</string>
+    <string name="ContraseñaLogin">contraseña</string>
+    <string name="CorreoRegistro">correo</string>
+    <string name="AccederLogin">acceder</string>
+    <string name="RegistroLogin">Registrarse</string>
+    <!--Textos FragmentReservas-->
+    <string name="canceled">CANCELADA</string>
+    <!--Textos FragmentReserva-->
+    <string name="TextoReservaInicio">La reserva está establecida para</string>
+    <string name="dia">día</string>
+    <string name="Cancelar">Cancelar</string>
+    <!--Tambien en FragmentReservas-->
+    <string name="desde">desde</string>
+    <string name="hasta">hasta</string>
+    <string name="GuardarCambios">Guardar cambios</string>
+    <!--Menu opciones configuracion de perfil-->
+    <string-array name="OpcionesPerfil">
+        <item>Idioma</item>
+        <item>Cambiar datos</item>
+        <item>Salir</item>
+    </string-array>
+    <string-array name="IdiomasAplicacion">
+        <item>Español</item>
+        <item>English</item>
+    </string-array>
+    <!--Opciones nav Menu-->
+    <string name="Instalaciones">Instalaciones</string>
+    <string name="Reservas">Reservas</string>
+    <string name="Perfil">Perfil</string>
+</resources>

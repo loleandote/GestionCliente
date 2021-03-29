@@ -71,15 +71,15 @@ public class FragmentPerfil extends Fragment {
                 }
             }
         });
-        Button botonAñadir = vista.findViewById(R.id.addMonedos);
-        botonAñadir.setOnClickListener(new View.OnClickListener() {
+//        Button botonAñadir = vista.findViewById(R.id.addMonedos);
+        /*botonAñadir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
-        });
-        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
-            @Override
+        });*/
+        //OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+          /*  @Override
             public void handleOnBackPressed() {
                 getActivity().finishAffinity(); System.exit(0);
                 // getActivity().finishAffinity();
@@ -87,7 +87,7 @@ public class FragmentPerfil extends Fragment {
 
             }
         };
-        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);*/
         return vista;
     }
     private String[] obtenerValoresOpciones(){

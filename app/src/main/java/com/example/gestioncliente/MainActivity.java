@@ -25,14 +25,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         String idioma =CargarIdioma();
         System.out.println(idioma);
+        Configuration config =new Configuration();
         if (idioma.length()>0)
         {
+            System.out.println(idioma);
             Locale locale = new Locale(idioma);
             // locale = Locale.UK;
-            Configuration config =new Configuration();
             config.locale = locale;
-            getBaseContext().getResources().updateConfiguration(config, this.getResources().getDisplayMetrics());
+            System.out.println("kkehadlkjfhalks");
+            //getBaseContext().getResources().updateConfiguration(config, this.getResources().getDisplayMetrics());
+        }else
+        {
+            System.out.println("hola mmmm" +idioma);
+           // config.locale = Locale.getDefault();
         }
+        getBaseContext().getResources().updateConfiguration(config, this.getResources().getDisplayMetrics());
         retrofit = Cliente.obtenerCliente();
         //cargarPropiedad();
         FragmentLogin fragmentLogin = new FragmentLogin(this);
@@ -49,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private String CargarIdioma()
     {
-        SharedPreferences sharedPreferences = getSharedPreferences("MyData", MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("Idiomas", MODE_PRIVATE);
         String idioma = sharedPreferences.getString("Idioma","");
         return idioma;
     }
