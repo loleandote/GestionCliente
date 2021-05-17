@@ -1,5 +1,6 @@
 package com.example.gestioncliente.Instalaciones;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -10,6 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.example.gestioncliente.ActividadConUsuario;
 import com.example.gestioncliente.Conexión.apiInstalaciones;
@@ -17,6 +21,8 @@ import com.example.gestioncliente.Datos.Instalación;
 import com.example.gestioncliente.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -52,17 +58,83 @@ public class FragmentInstalaciones extends Fragment {
         instalaciónAdapter.setOnItemClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                instalacionPulsada= recyclerView.getChildAdapterPosition(v);
-                Instalación instalación =instalaciónAdapter.lista.get(instalacionPulsada);
-                System.out.println(instalación.getNombre());
-                seleccionarInstalacion(instalación);
+                if (actividadConUsuario.rol!=null && actividadConUsuario.rol.isRealiza_reserva()){
+                    instalacionPulsada= recyclerView.getChildAdapterPosition(v);
+                    Instalación instalación =instalaciónAdapter.lista.get(instalacionPulsada);
+                    System.out.println(instalación.getNombre());
+                    seleccionarInstalacion(instalación);
+                }
+
+            }
+        });
+        Spinner OrdenarInstalaciones = vista.findViewById(R.id.OrdenarInstalaciones);
+        Resources res = getResources();
+        String[] opciones = res.getStringArray(R.array.OpcionesInstalaciones);
+        ArrayAdapter<String> opcionesAdapter=new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item,opciones);
+        OrdenarInstalaciones.setAdapter(opcionesAdapter);
+        OrdenarInstalaciones.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                ArrayList<Instalación>lista = instalaciónAdapter.lista;
+                switch (position){
+                    case 0:
+                        Collections.sort(lista, new Comparator<Instalación>() {
+                            @Override
+                            public int compare(Instalación o1, Instalación o2) {
+                                return o1.getNombre().compareTo(o2.getNombre());
+                            }
+                        });
+                        break;
+                    case 1:
+                        Collections.sort(lista, new Comparator<Instalación>() {
+                            @Override
+                            public int compare(Instalación o1, Instalación o2) {
+                                return o2.getNombre().compareTo(o1.getNombre());
+                            }
+                        });
+                        break;
+                    case 2:
+                        Collections.sort(lista, new Comparator<Instalación>() {
+                            @Override
+                            public int compare(Instalación o1, Instalación o2) {
+                                int precio1 =o1.getPrecio_hora();
+                                int precio2=o2.getPrecio_hora();
+                                if(precio1<precio2)
+                                    return -1;
+                                if (precio1==precio2)
+                                    return 0;
+                                    return 1;
+                            }
+                        });
+                        break;
+                    case 3:
+                        Collections.sort(lista, new Comparator<Instalación>() {
+                            @Override
+                            public int compare(Instalación o1, Instalación o2) {
+                                int precio1 =o1.getPrecio_hora();
+                                int precio2=o2.getPrecio_hora();
+                                if(precio1<precio2)
+                                    return 1;
+                                if (precio1==precio2)
+                                    return 0;
+                                return -1;
+                            }
+                        });
+                        break;
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
         obtenerDatos();
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
-                getActivity().finishAffinity();
+                getActivity().finish();
                 // Handle the back button event
 
             }
@@ -89,8 +161,13 @@ public class FragmentInstalaciones extends Fragment {
         });
     }
     private void seleccionarInstalacion(Instalación instalacion){
-        FragmentInstalacion fragmentInstalacion= new FragmentInstalacion(actividadConUsuario);
+        try{
+        FragmentInstalacion fragmentInstalacion= new FragmentInstalacion(actividadConUsuario,this);
         fragmentInstalacion.instalación= instalacion;
         actividadConUsuario.cambiarFragmento(fragmentInstalacion);
+    }catch (Exception ex)
+        {
+            System.out.println(ex.getCause());
+        }
     }
 }

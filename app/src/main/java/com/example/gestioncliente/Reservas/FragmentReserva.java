@@ -33,12 +33,14 @@ public class FragmentReserva extends Fragment {
     private View vista;
     public Reserva reserva;
     private ImageView imagenReserva;
+    private FragmentReservas fragmentReservas;
     public FragmentReserva() {
         // Required empty public constructor
     }
 
-    public FragmentReserva(ActividadConUsuario actividadConUsuario) {
+    public FragmentReserva(ActividadConUsuario actividadConUsuario, FragmentReservas fragmentReservas) {
         this.actividadConUsuario= actividadConUsuario;
+        this.fragmentReservas= fragmentReservas;
     }
 
 
@@ -50,6 +52,7 @@ public class FragmentReserva extends Fragment {
 
 
         imagenReserva = vista.findViewById(R.id.ReservaImagen);
+        if (reserva!= null & reserva.getImagen_instalacion()!=null)
         Picasso.get().load(reserva.getImagen_instalacion())
                 .placeholder(R.drawable.icons8_squats_30)
                 .error(R.drawable.icons8_error_cloud_48)
@@ -57,7 +60,8 @@ public class FragmentReserva extends Fragment {
                 //.centerCrop()
                 .into(imagenReserva);
         TextView fechaReserva = vista.findViewById(R.id.FechaResevaTextView);
-        fechaReserva.setText(reserva.getDia());
+        String textoFecha = String.valueOf(reserva.getDia())+"-"+String.valueOf(reserva.getMes())+"-"+String.valueOf(reserva.getAño());
+        fechaReserva.setText(textoFecha);
         TextView fechaDesdeReserva = vista.findViewById(R.id.FechaDesdeTextView);
         fechaDesdeReserva.setText(String.valueOf(reserva.getHora_inicio())+":00");
         TextView fechaHastaReserva = vista.findViewById(R.id.FechaHastaTextView);
@@ -68,13 +72,18 @@ public class FragmentReserva extends Fragment {
             canceladaReserva.setVisibility(View.GONE);
         }
         Button cancelarReserva = vista.findViewById(R.id.CancelarReserva);
+        if (reserva != null & reserva.isCancel_usu() || reserva.isCancel_admin()){
+            cancelarReserva.setVisibility(View.INVISIBLE);
+        }
         cancelarReserva.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    Date fechaReserva=new SimpleDateFormat("dd-MM-yyyy").parse(reserva.getDia());
-                    fechaReserva.setHours(reserva.getHora_inicio());
+                    Date fechaReserva=new Date(1900+reserva.getAño(), reserva.getMes(), reserva.getDia());
+                    fechaReserva.setHours(reserva.getHora_inicio()-1);
                     Date fechaActual = new Date();
+System.out.println(fechaActual.toString());
+System.out.println(fechaReserva.toString());
+System.out.println(fechaActual.before(fechaReserva));
                     if (fechaActual.compareTo(fechaReserva)==-1){
 
 
@@ -94,22 +103,21 @@ public class FragmentReserva extends Fragment {
                     }
                 });
                     }
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
             }
         });
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
                 // Handle the back button event
-                FragmentReservas fragmentReservas = new FragmentReservas(actividadConUsuario);
-                actividadConUsuario.cambiarFragmento(fragmentReservas);
+            volverAReservas();
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
 
         return vista;
+    }
+    private void volverAReservas(){
+        actividadConUsuario.cambiarFragmento(fragmentReservas);
     }
 
 }

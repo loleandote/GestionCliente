@@ -32,11 +32,10 @@ public class MainActivity extends AppCompatActivity {
             Locale locale = new Locale(idioma);
             // locale = Locale.UK;
             config.locale = locale;
-            System.out.println("kkehadlkjfhalks");
             //getBaseContext().getResources().updateConfiguration(config, this.getResources().getDisplayMetrics());
         }else
         {
-            System.out.println("hola mmmm" +idioma);
+
            // config.locale = Locale.getDefault();
         }
         getBaseContext().getResources().updateConfiguration(config, this.getResources().getDisplayMetrics());

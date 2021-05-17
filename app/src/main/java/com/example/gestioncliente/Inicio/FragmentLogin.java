@@ -10,9 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.gestioncliente.ActividadConUsuario;
+import com.example.gestioncliente.Conexión.apiRol;
 import com.example.gestioncliente.Conexión.apiUsuario;
+import com.example.gestioncliente.Datos.Rol;
 import com.example.gestioncliente.Datos.Usuario;
 import com.example.gestioncliente.MainActivity;
 import com.example.gestioncliente.R;
@@ -28,6 +31,7 @@ public class FragmentLogin extends Fragment {
 
     private MainActivity mainActivity;
     private View vista;
+    public FragmentLogin(){}
     public FragmentLogin(MainActivity mainActivity) {
         this.mainActivity= mainActivity;
     }
@@ -45,8 +49,8 @@ public class FragmentLogin extends Fragment {
                 String nombre= String.valueOf(nombreEditText.getText());
                 String contraseña= String.valueOf(contraseñaEditText.getText());
                 obtenerUsuario(nombre, contraseña);
-                Intent intent= new Intent(mainActivity, ActividadConUsuario.class);
-                startActivity(intent);
+              /*  Intent intent= new Intent(mainActivity, ActividadConUsuario.class);
+                startActivity(intent);*/
             }
         });
         Button registro = vista.findViewById(R.id.IrRegistroFragmentButton);
@@ -61,31 +65,24 @@ public class FragmentLogin extends Fragment {
     }
     private void obtenerUsuario(String nombre, String contraseña){
         apiUsuario apiUsuario = mainActivity.retrofit.create(com.example.gestioncliente.Conexión.apiUsuario.class);
-        Call<ArrayList<Usuario>> respuesta=apiUsuario.obtenerUsuario(nombre, contraseña);
+        Call<ArrayList<Usuario>> respuesta=apiUsuario.obtenerUsuario(nombre, contraseña, false, false, true);
         respuesta.enqueue(new Callback<ArrayList<Usuario>>() {
             @Override
             public void onResponse(Call<ArrayList<Usuario>> call, Response<ArrayList<Usuario>> response) {
                 ArrayList<Usuario> lista = response.body();
                 if(lista.size()>0){
-                    if(!lista.get(0).isPenalizado() && lista.get(0).getCodigo_rol()==1) {
                         Usuario usuario = lista.get(0);
+                            Intent intent = new Intent(mainActivity, ActividadConUsuario.class);
+                            intent.putExtra("usuario", usuario.getId());
+                            startActivity(intent);
                         System.out.println("Hola");
-                        if (usuario.getCodigo_rol() == 1) {
-                        Intent intent= new Intent(mainActivity, ActividadConUsuario.class);
-                        intent.putExtra("usuario", usuario.getId());
-                        startActivity(intent);
-                    }
-                        // FragmentReservas fragmentReservas = new FragmentReservas(mainActivity);
-                        // mainActivity.cambiarFragment(fragmentReservas);
-                    }
-                }
-
+                    } System.out.println("Hola");
             }
 
             @Override
             public void onFailure(Call<ArrayList<Usuario>> call, Throwable t) {
-                //Toast.makeText(getActivity(),"nada",Toast.LENGTH_LONG).show();
-                System.err.println(String.valueOf(t.getCause()));
+                Toast.makeText(getActivity(),t.getLocalizedMessage(),Toast.LENGTH_LONG).show();
+                System.err.println(String.valueOf(t.getLocalizedMessage()));
             }
         });
     }

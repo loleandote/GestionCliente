@@ -44,7 +44,7 @@ public class FragmentoConfigurarCuenta extends Fragment {
         EditText contraseñaEditText = vista.findViewById(R.id.contraseñaEditTextoConfigurar);
         contraseñaEditText.setText(actividadConUsuario.usuario.getContraseña_usuario());
         EditText  correoEditText = vista.findViewById(R.id.correoEditTextoConfigurar);
-        contraseñaEditText.setText(actividadConUsuario.usuario.getCorreo_usuario());
+        correoEditText.setText(actividadConUsuario.usuario.getCorreo_usuario());
         Button botonGuardar = vista.findViewById(R.id.GuardarCambiosUsuario);
         botonGuardar.setOnClickListener(new View.OnClickListener() {
             @Override

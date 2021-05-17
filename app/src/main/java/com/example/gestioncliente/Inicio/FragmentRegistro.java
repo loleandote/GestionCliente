@@ -52,7 +52,8 @@ public class FragmentRegistro extends Fragment {
                 String contraseña = String.valueOf(contraseñaEditText.getText());
                 String correo = String.valueOf(correoEditText.getText());
                 if(nombre.length()>3&&nombre.length()<9&&contraseña.length()>7&& contraseña.length()<17&&validarEmail(correo))
-                    guardarUsuario(nombre,contraseña,correo);
+                   obtenerUsuario(nombre,contraseña, correo);
+                    // guardarUsuario(nombre,contraseña,correo);
             }
         });
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
@@ -69,35 +70,17 @@ public class FragmentRegistro extends Fragment {
     }
     private void obtenerUsuario(String nombre, String contraseña, String correo){
         apiUsuario apiUsuario = mainActivity.retrofit.create(apiUsuario.class);
-        Call<ArrayList<Usuario>> respuesta = apiUsuario.obtenerUsuarioNomberContraseñaCorreo(nombre, contraseña, correo);
-        respuesta.enqueue(new Callback<ArrayList<Usuario>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Usuario>> call, Response<ArrayList<Usuario>> response) {
-                if (response.isSuccessful()){
-                    ArrayList<Usuario> usuarios= response.body();
-                    if( usuarios.size()==0){
-                        guardarUsuario(nombre, contraseña, correo);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<Usuario>> call, Throwable t) {
-
-            }
-        });
-    }
-    private void guardarUsuario(String nombre, String contraseña, String correo){
-        apiUsuario apiUsuario = mainActivity.retrofit.create(apiUsuario.class);
-        Date fechavalor= new Date();
-        String fecha=String.valueOf(fechavalor.getDay()+"-"+fechavalor.getMonth()+"-"+fechavalor.getYear());
-        ArrayList<String> observaciones = new ArrayList<>();
-        observaciones.add("");
-        Call<Usuario> respuesta = apiUsuario.guardaUsuario(nombre, contraseña, correo,fecha,100, observaciones,false,"",1);
+        Call<Usuario> respuesta = apiUsuario.obtenerUsuarioNombre(nombre);
         respuesta.enqueue(new Callback<Usuario>() {
             @Override
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                if (response.isSuccessful()){
+                    Usuario usuarios= response.body();
+                    if( usuarios==null){
 
+                        obtenerUsuarioCorreo(nombre, contraseña, correo);
+                    }
+                }
             }
 
             @Override
@@ -105,8 +88,48 @@ public class FragmentRegistro extends Fragment {
 
             }
         });
-        FragmentLogin fragment_login= new FragmentLogin(mainActivity);
-        mainActivity.cambiarFragment(fragment_login);
+    }
+
+    private  void  obtenerUsuarioCorreo(String nombre, String contraseña, String correo){
+        apiUsuario apiUsuario = mainActivity.retrofit.create(com.example.gestioncliente.Conexión.apiUsuario.class);
+        Call<Usuario> respuesta = apiUsuario.obtenerUsuarioCorreo(contraseña);
+        respuesta.enqueue(new Callback<Usuario>() {
+            @Override
+            public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                if (response.isSuccessful()){
+                    if (response.body()== null)
+                        guardarUsuario(nombre, contraseña, correo);
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Usuario> call, Throwable t) {
+
+            }
+        });
+    }
+    private void guardarUsuario(String nombre, String contraseña, String correo){
+        apiUsuario apiUsuario = mainActivity.retrofit.create(apiUsuario.class);
+        Date fechavalor= new Date();
+        ArrayList<String> observaciones = new ArrayList<>();
+        observaciones.add("");
+        System.out.println(fechavalor.getDate());
+
+        Call<Usuario> respuesta = apiUsuario.guardaUsuario(nombre, contraseña,true, correo,fechavalor.getDate(),fechavalor.getMonth()+1,fechavalor.getYear()+1900,100, observaciones,false,"",1);
+        respuesta.enqueue(new Callback<Usuario>() {
+            @Override
+            public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                FragmentLogin fragment_login= new FragmentLogin(mainActivity);
+                mainActivity.cambiarFragment(fragment_login);
+            }
+
+            @Override
+            public void onFailure(Call<Usuario> call, Throwable t) {
+
+            }
+        });
+
     }
     private boolean validarEmail(String email) {
         Pattern pattern = Patterns.EMAIL_ADDRESS;

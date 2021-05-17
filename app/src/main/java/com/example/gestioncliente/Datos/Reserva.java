@@ -16,9 +16,18 @@ public class Reserva {
     @SerializedName("imagen_instalacion")
     @Expose
     private String imagen_instalacion;
+    @SerializedName("nombre_instalacion")
+    @Expose
+    private String nombre_instalacion;
     @SerializedName("dia")
     @Expose
-    private String dia;
+    private int dia;
+    @SerializedName("mes")
+    @Expose
+    private int mes;
+    @SerializedName("anyo")
+    @Expose
+    private int anyo;
     @SerializedName("hora_inicio")
     @Expose
     private int hora_inicio;
@@ -40,13 +49,31 @@ public class Reserva {
 
     public Reserva() {
     }
+    public Reserva( int id_usuario, int id_instalacion, String imagen_instalacion, String nombre_instalacion, int dia, int mes, int anyo, int hora_inicio, int hora_fin, boolean cancel_usu, boolean cancel_admin, boolean no_acude, boolean pagado) {
+        this.id_usuario = id_usuario;
+        this.id_instalacion = id_instalacion;
+        this.imagen_instalacion = imagen_instalacion;
+        this.nombre_instalacion = nombre_instalacion;
+        this.dia = dia;
+        this.mes = mes;
+        this.anyo = anyo;
+        this.hora_inicio = hora_inicio;
+        this.hora_fin = hora_fin;
+        this.cancel_usu = cancel_usu;
+        this.cancel_admin = cancel_admin;
+        this.no_acude = no_acude;
+        this.pagado = pagado;
+    }
 
-    public Reserva(int id, int id_usuario, int id_instalacion, String imagen_instalacion, String dia, int hora_inicio, int hora_fin, boolean cancel_usu, boolean cancel_admin, boolean no_acude, boolean pagado) {
+    public Reserva(int id, int id_usuario, int id_instalacion, String imagen_instalacion, String nombre_instalacion, int dia, int mes, int anyo, int hora_inicio, int hora_fin, boolean cancel_usu, boolean cancel_admin, boolean no_acude, boolean pagado) {
         this.id = id;
         this.id_usuario = id_usuario;
         this.id_instalacion = id_instalacion;
         this.imagen_instalacion = imagen_instalacion;
+        this.nombre_instalacion = nombre_instalacion;
         this.dia = dia;
+        this.mes = mes;
+        this.anyo = anyo;
         this.hora_inicio = hora_inicio;
         this.hora_fin = hora_fin;
         this.cancel_usu = cancel_usu;
@@ -87,12 +114,28 @@ public class Reserva {
         this.imagen_instalacion = imagen_instalacion;
     }
 
-    public String getDia() {
+    public int getDia() {
         return dia;
     }
 
-    public void setDia(String dia) {
+    public void setDia(int dia) {
         this.dia = dia;
+    }
+
+    public int getMes() {
+        return mes;
+    }
+
+    public void setMes(int mes) {
+        this.mes = mes;
+    }
+
+    public int getAño() {
+        return anyo;
+    }
+
+    public void setAño(int año) {
+        this.anyo = año;
     }
 
     public int getHora_inicio() {
@@ -141,5 +184,21 @@ public class Reserva {
 
     public void setPagado(boolean pagado) {
         this.pagado = pagado;
+    }
+
+    public String getNombre_instalacion() {
+        return nombre_instalacion;
+    }
+
+    public void setNombre_instalacion(String nombre_instalacion) {
+        this.nombre_instalacion = nombre_instalacion;
+    }
+
+    public int getAnyo() {
+        return anyo;
+    }
+
+    public void setAnyo(int anyo) {
+        this.anyo = anyo;
     }
 }

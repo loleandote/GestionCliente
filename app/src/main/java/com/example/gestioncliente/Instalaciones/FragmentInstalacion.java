@@ -46,19 +46,26 @@ public class FragmentInstalacion extends Fragment {
     private EditText DiaEditText;
     private Spinner reservasInicioDisponibles;
     private Spinner reservasFinDisponibles;
-    private String dia;
     private ArrayList<Reserva> reservasDia;
     private ArrayList<Integer>listaInicio;
     private ArrayList<Integer> listaFin;
     private int horaInicio;
     private int horaFin;
-
+    private int dia;
+    private int mes;
+    private int año;
+    private Reserva reserva;
+    private FragmentInstalaciones fragmentInstalaciones;
     public FragmentInstalacion() {
         // Required empty public constructor
     }
 
     public FragmentInstalacion(ActividadConUsuario actividadConUsuario) {
         this.actividadConUsuario = actividadConUsuario;
+    }
+    public FragmentInstalacion(ActividadConUsuario actividadConUsuario, FragmentInstalaciones fragmentInstalaciones) {
+        this.actividadConUsuario = actividadConUsuario;
+        this.fragmentInstalaciones = fragmentInstalaciones;
     }
 
 
@@ -79,18 +86,21 @@ public class FragmentInstalacion extends Fragment {
                 //.centerCrop()
                 .into(imageView);
         LocalDate fecha = LocalDate.now();
+        dia = fecha.getDayOfMonth();
+        mes= fecha.getMonth().getValue();
+        año = fecha.getYear();
         String dia2= String.valueOf(fecha.getDayOfMonth());
         if (fecha.getDayOfMonth()<10){
             dia2="0"+dia2;
         }
-        String mes= String.valueOf(fecha.getMonthValue());
+        String mes2= String.valueOf(fecha.getMonthValue());
         if(fecha.getMonthValue()<10){
-            mes="0"+mes;
+            mes2="0"+mes2;
         }
-        dia = dia2+"-"+mes+"-"+String.valueOf(fecha.getYear());
+       String Textodia = dia2+"-"+mes2+"-"+String.valueOf(fecha.getYear());
 
         DiaEditText = vista.findViewById(R.id.DiaEditText);
-        DiaEditText.setText(dia);
+        DiaEditText.setText(Textodia);
         DiaEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,11 +147,11 @@ public class FragmentInstalacion extends Fragment {
                 int diferencia = horaFin - horaInicio;
                 if (horaInicio>0 && horaFin>0&& diferencia > 0 && diferencia < 3) {
                     System.out.println(diferencia);
-                    Call<Reserva> respuesta = apiReservas.guardaReserva(actividadConUsuario.usuario.getId(), instalación.getId(), instalación.getImagenes().get(0), dia, horaInicio, horaFin, false, false, true);
+                    Call<Reserva> respuesta = apiReservas.guardaReserva(actividadConUsuario.usuario.getId(), instalación.getId(), instalación.getImagenes().get(0),instalación.getNombre(), dia,mes,año, horaInicio, horaFin, false, false, true,false);
                     respuesta.enqueue(new Callback<Reserva>() {
                         @Override
                         public void onResponse(Call<Reserva> call, Response<Reserva> response) {
-                            actualizarSaldoUsuario();
+                            actualizarSaldoUsuario(response.body());
                         }
 
                         @Override
@@ -156,12 +166,15 @@ public class FragmentInstalacion extends Fragment {
             @Override
             public void handleOnBackPressed() {
                 // Handle the back button event
-                FragmentInstalaciones fragmentInstalaciones = new FragmentInstalaciones(actividadConUsuario);
-                actividadConUsuario.cambiarFragmento(fragmentInstalaciones);
+             volverAInstalaciones();
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
         return vista;
+    }
+    private void volverAInstalaciones()
+    {
+        actividadConUsuario.cambiarFragmento(fragmentInstalaciones);
     }
     private void showDatePickerDialog() {
         DatePickerFragment newFragment = DatePickerFragment.newInstance(new DatePickerDialog.OnDateSetListener() {
@@ -169,6 +182,9 @@ public class FragmentInstalacion extends Fragment {
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 // +1 because January is zero
                 Date fecha = new Date(year,month+1, day);
+                dia = day;
+                mes= month;
+                año= year;
                 Date fechaActual = new Date();
                 if(fecha.compareTo(fechaActual)>0){
                     long diffInDays = ( (fecha.getTime() - fechaActual.getTime())
@@ -181,19 +197,19 @@ public class FragmentInstalacion extends Fragment {
                     //System.out.println(fecha.toString());
 
                     System.out.println(fechaActual.toString());
-                    String mes = String.valueOf(month+1);
+                    String mes2 = String.valueOf(month+1);
                     String dia2= String.valueOf(day);
                     if (diferencia<=14 && diferencia>0){
                         horaInicio=0;
                         horaFin=0;
                         if(month+1<10){
-                            mes="0"+mes;
+                            mes2="0"+mes2;
                         }
                         if (day<10){
                             dia2="0"+dia2;
                         }
-                        dia = dia2 + "-" + mes + "-" + year;
-                        DiaEditText.setText(dia);
+                        String textodia = dia2 + "-" + mes2 + "-" + year;
+                        DiaEditText.setText(textodia);
                         listaInicio= new ArrayList<>();
                         listaInicio =instalación.getHorario();
                         listaFin= new ArrayList<>();
@@ -210,39 +226,47 @@ public class FragmentInstalacion extends Fragment {
 
         newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
     }
-    private void actualizarSaldoUsuario(){
+    private void actualizarSaldoUsuario(Reserva reserva){
         apiUsuario apiUsuario= actividadConUsuario.retrofit.create(apiUsuario.class);
         int creditos= actividadConUsuario.usuario.getCreditos()-instalación.getPrecio_hora()*(horaFin-horaInicio);
-        actividadConUsuario.usuario.setCreditos(creditos);
-        Call<Usuario> respuesta = apiUsuario.actualizarUsuario(actividadConUsuario.usuario.getId(),actividadConUsuario.usuario);
-        respuesta.enqueue(new Callback<Usuario>() {
-            @Override
-            public void onResponse(Call<Usuario> call, Response<Usuario> response) {
-                FragmentReservas fragmentReservas = new FragmentReservas(actividadConUsuario);
-                actividadConUsuario.cambiarFragmento(fragmentReservas);
-            }
+        if (creditos>=0) {
+            actividadConUsuario.usuario.setCreditos(creditos);
+            Call<Usuario> respuesta = apiUsuario.actualizarUsuario(actividadConUsuario.usuario.getId(), actividadConUsuario.usuario);
+            respuesta.enqueue(new Callback<Usuario>() {
+                @Override
+                public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                    apiReservas apiReservas = actividadConUsuario.retrofit.create(com.example.gestioncliente.Conexión.apiReservas.class);
+                    reserva.setPagado(true);
+                    apiReservas.actualizarReserva(reserva.getId(), reserva);
+                    FragmentReservas fragmentReservas = new FragmentReservas(actividadConUsuario);
+                    actividadConUsuario.cambiarFragmento(fragmentReservas);
+                }
 
-            @Override
-            public void onFailure(Call<Usuario> call, Throwable t) {
+                @Override
+                public void onFailure(Call<Usuario> call, Throwable t) {
 
-            }
-        });
+                }
+            });
+        }
     }
     private void obtenerReservasDia(){
         apiReservas apiReservas= actividadConUsuario.retrofit.create(apiReservas.class);
-        Call<ArrayList<Reserva>>respuesta = apiReservas.obtenerReservas(dia);
+        Call<ArrayList<Reserva>>respuesta = apiReservas.obtenerReservasInstalacionDia(instalación.getId(),false,false,año,mes,dia);
         respuesta.enqueue(new Callback<ArrayList<Reserva>>() {
             @Override
             public void onResponse(Call<ArrayList<Reserva>> call, Response<ArrayList<Reserva>> response) {
                 reservasDia=response.body();
                 System.out.println(response.body().size());
-                for (int i=0;i<response.body().size();i++){
-                    int posicion =listaInicio.indexOf(response.body().get(i).getHora_inicio());
-                    if (posicion>=0)
-                        listaInicio.remove(posicion);
-                    posicion=listaFin.indexOf(response.body().get(i).getHora_fin());
-                    if(posicion>=0)
-                        listaFin.remove(posicion);
+                for (int i=0;i<response.body().size();i++) {
+
+                    int diferencia = response.body().get(i).getHora_fin() - response.body().get(i).getHora_inicio();
+
+                    for (int j = 0; j < diferencia; j++) {
+                        int posicion = listaInicio.indexOf(response.body().get(i).getHora_inicio() + j);
+                            listaInicio.remove(posicion);
+                            listaFin.remove(posicion);
+                    }
+
                 }
                 ActualizarListas();
             }

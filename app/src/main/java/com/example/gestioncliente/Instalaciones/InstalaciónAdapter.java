@@ -39,12 +39,18 @@ public class InstalaciónAdapter extends RecyclerView.Adapter<InstalaciónAdapte
 
     @Override
     public void onBindViewHolder(@NonNull MiViewHolder holder, int position) {
-        Picasso.get().load(lista.get(position).getImagenes().get(0))
-                .placeholder(R.drawable.icons8_squats_30)
-                .error(R.drawable.icons8_error_cloud_48)
-                //.resize(80,60)
-                //.centerCrop()
-                .into(holder.imagenView);
+        try {
+            Picasso.get().load(lista.get(position).getImagenes().get(0))
+                        .placeholder(R.drawable.icons8_squats_30)
+                    .error(R.drawable.icons8_error_cloud_48)
+                    //.resize(80,60)
+                    //.centerCrop()
+                    .into(holder.imagenView);
+        }catch (IllegalArgumentException ex){
+
+        }
+
+
         String texto = String.valueOf(lista.get(position).getId());
         //Integer nombre = lista.get(postion).getId_reserva();
         //holder.nombreTextView.setText(texto);

@@ -65,6 +65,8 @@ public class FragmentPerfil extends Fragment {
                         actividadConUsuario.cambiarFragmento(fragmentoConfigurarCuenta);
                         break;
                     case 2:
+                        break;
+                    case 3:
                         Intent intent= new Intent(actividadConUsuario, MainActivity.class);
                         startActivity(intent);
                         break;

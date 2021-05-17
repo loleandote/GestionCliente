@@ -38,8 +38,7 @@ public class ReservaAdapter extends RecyclerView.Adapter<ReservaAdapter.MiViewHo
     }
     @Override
     public void onBindViewHolder(@NonNull MiViewHolder holder, int postion){
-       /* System.out.println(lista.size());
-        System.out.println(postion);*/
+
         //new DownloadImageTask(holder.imagenView).execute(lista.get(postion).getImagen_instalacion());
         Reserva reserva =lista.get(postion);
         Picasso.get().load(reserva.getImagen_instalacion())
@@ -50,16 +49,22 @@ public class ReservaAdapter extends RecyclerView.Adapter<ReservaAdapter.MiViewHo
                 .into(holder.imagenView);
         String texto = String.valueOf(reserva.getId());
         //Integer nombre = lista.get(postion).getId_reserva();
-        holder.nombreTextView.setText(texto);
-        String descripcion = String.valueOf(reserva.getId_usuario());
-        holder.descripcionTextView.setText(descripcion);
-        if (!reserva.isCancel_usu() && !reserva.isCancel_admin()) {
-            holder.canceladoTextView.setVisibility(View.GONE);
+        holder.nombreTextView.setText(reserva.getNombre_instalacion());
+       // holder.nombreTextView.setText(texto);
+        String año =String.valueOf(reserva.getDia()+"-"+reserva.getMes()+"-"+reserva.getAnyo());
+        holder.descripcionTextView.setText(año);
+//        holder.descripcionTextView.setText(String.valueOf(!reserva.isCancel_usu() && !reserva.isCancel_admin()));
+        if (reserva.isCancel_usu() || reserva.isCancel_admin()){
+            holder.canceladoTextView.setVisibility(View.VISIBLE);
         }
 
     }
 
 
+    public void cambiarLista(ArrayList<Reserva>lista){
+        this.lista= lista;
+        notifyDataSetChanged();
+    }
 
     public void anyadirALista(ArrayList<Reserva> lista){
         this.lista.addAll(lista);
