@@ -15,14 +15,15 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface apiUsuario {
+
     @GET("usuarios")
     Call<ArrayList<Usuario>> obtenerUsuario(@Query("id") int id_usuario);
     @GET("usuarios")
-    Call<Usuario> obtenerUsuarioNombre(@Query("nombre_usuario") String nombre_usuario);
+    Call< ArrayList<Usuario>> obtenerUsuarioNombre(@Query("nombre_usuario") String nombre_usuario);
+  /*  @GET("usuarios")
+    Call<ArrayList<Usuario>> obtenerUsuarioCorreo(@Query("correo_usuario") String correo_usuario);*/
     @GET("usuarios")
-    Call<Usuario> obtenerUsuarioCorreo(@Query("correo_usuario") String correo_usuario);
-    @GET("usuarios")
-    Call<ArrayList<Usuario>> obtenerUsuario(@Query("nombre_usuario") String nombre_usuario, @Query("contrasña_usuario") String contraseña,@Query("baja")boolean baja,@Query("penalizado") boolean penalizado,@Query("es_cliente") boolean esCliente);
+    Call<ArrayList<Usuario>> obtenerUsuario(@Query("nombre_usuario") String nombre_usuario, @Query("contraseña_usuario") String contraseña,@Query("baja")boolean baja,@Query("penalizado") boolean penalizado,@Query("es_cliente") boolean esCliente);
     @GET("usuarios")
     Call<ArrayList<Usuario>> obtenerUsuarioNomberContraseñaCorreo(@Query("nombre_usuario") String nombre_usuario, @Query("contrasña_usuario") String contraseña,@Query("correo_usuario")String correoUsuario);
     @FormUrlEncoded
@@ -36,7 +37,6 @@ public interface apiUsuario {
             @Field("mes_alta") int mes_alta,
             @Field("anyo_alta") int anyo_alta,
             @Field("creditos") int creditos,
-            @Field("observaciones")ArrayList<String>observaciones,
             @Field("penalizado") Boolean penalizado,
             @Field("fecha_fin_pena") String fecha_fin_pena,
             @Field("codigo_rol") int codigo_rol

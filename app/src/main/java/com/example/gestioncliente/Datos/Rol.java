@@ -11,7 +11,7 @@ public class Rol {
     @Expose
     private String nombre_rol;
 
-    @SerializedName("realiza_reserva")
+    @SerializedName("realiza_reservas")
     @Expose
     private boolean realiza_reserva;
     @SerializedName("cancela_reserva")

@@ -36,9 +36,6 @@ public class Usuario {
     @SerializedName("creditos")
     @Expose
     private Integer creditos;
-    @SerializedName("observaciones")
-    @Expose
-    private ArrayList<String> observaciones;
     @SerializedName("penalizado")
     @Expose
     private boolean penalizado;
@@ -61,7 +58,7 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(Integer id, String nombre_usuario, boolean es_cliente, String contraseña_usuario, String correo_usuario, Integer dia_alta, Integer mes_alta, Integer anyo_alta, Integer creditos, ArrayList<String> observaciones, boolean penalizado, Integer dia_fin_pena, Integer mes_fin_pena, Integer anyo_fin_pena, Integer codigo_rol, Boolean baja) {
+    public Usuario(Integer id, String nombre_usuario, boolean es_cliente, String contraseña_usuario, String correo_usuario, Integer dia_alta, Integer mes_alta, Integer anyo_alta, Integer creditos, boolean penalizado, Integer dia_fin_pena, Integer mes_fin_pena, Integer anyo_fin_pena, Integer codigo_rol, Boolean baja) {
         this.id = id;
         this.nombre_usuario = nombre_usuario;
         this.es_cliente = es_cliente;
@@ -71,7 +68,6 @@ public class Usuario {
         this.mes_alta = mes_alta;
         this.anyo_alta = anyo_alta;
         this.creditos = creditos;
-        this.observaciones = observaciones;
         this.penalizado = penalizado;
         this.dia_fin_pena = dia_fin_pena;
         this.mes_fin_pena = mes_fin_pena;
@@ -144,13 +140,6 @@ public class Usuario {
         this.creditos = creditos;
     }
 
-    public ArrayList<String> getObservaciones() {
-        return observaciones;
-    }
-
-    public void setObservaciones(ArrayList<String> observaciones) {
-        this.observaciones = observaciones;
-    }
 
     public boolean isPenalizado() {
         return penalizado;

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">FuerzaLol</string>
+    <string name="app_name">GimnasioZucarita</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="canceled">CANCELED</string>
     <string name="TextoReservaInicio">The book is established on</string>
@@ -11,7 +11,6 @@
     <string-array name="OpcionesPerfil">
         <item>Languaje</item>
         <item>Change data</item>
-        <item>Close account</item>
         <item>Log out</item>
     </string-array>
     <string-array name="MesesAño">
@@ -54,4 +53,11 @@
     <string name="AccederLogin">log in</string>
     <string name="RegistroLogin">Register</string>
     <string name="GuardarCambios">Save changes</string>
+    <string name="NombreIncorrecto">Invalid name, it must be between 4 and 8 characters</string>
+    <string name="CorreoIncorrecto">Invaid email</string>
+    <string name="ContraseñaIncorrecta">Invalid password, must between 8 and 16 characteres</string>
+    <string name="FechaIncorrecta">The date mus be upper or equals to actual</string>
+    <string name="Titulo">Title:</string>
+    <string name="Observacion">Observation:</string>
+    <string name="ObservacionesDe">\'s observations</string>
 </resources>

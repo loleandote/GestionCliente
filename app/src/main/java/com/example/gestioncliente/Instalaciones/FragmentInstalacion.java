@@ -1,6 +1,7 @@
 package com.example.gestioncliente.Instalaciones;
 
 import android.app.DatePickerDialog;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -18,6 +19,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.gestioncliente.ActividadConUsuario;
 import com.example.gestioncliente.Conexión.apiReservas;
@@ -56,6 +58,8 @@ public class FragmentInstalacion extends Fragment {
     private int año;
     private Reserva reserva;
     private FragmentInstalaciones fragmentInstalaciones;
+    Resources resources= getResources();
+
     public FragmentInstalacion() {
         // Required empty public constructor
     }
@@ -217,7 +221,8 @@ public class FragmentInstalacion extends Fragment {
                             listaFin.add(listaInicio.get(i)+1);
                         }
                         obtenerReservasDia();
-                    }
+                    }else Toast.makeText(getActivity(), resources.getString(R.string.FechaIncorrecta), Toast.LENGTH_SHORT).show();
+
 
                 }
 

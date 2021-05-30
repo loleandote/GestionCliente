@@ -3,6 +3,7 @@ package com.example.gestioncliente.Inicio;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import com.example.gestioncliente.MainActivity;
 import com.example.gestioncliente.R;
 
 import java.util.ArrayList;
+import java.util.EmptyStackException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -61,22 +63,35 @@ public class FragmentLogin extends Fragment {
                 mainActivity.cambiarFragment(fragment_registro);
             }
         });
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                getActivity().finishAffinity();
+                // Handle the back button event
+
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
         return vista;
     }
     private void obtenerUsuario(String nombre, String contraseña){
         apiUsuario apiUsuario = mainActivity.retrofit.create(com.example.gestioncliente.Conexión.apiUsuario.class);
         Call<ArrayList<Usuario>> respuesta=apiUsuario.obtenerUsuario(nombre, contraseña, false, false, true);
+       // Call<ArrayList<Usuario>> respuesta=apiUsuario.obtenerUsuario();
         respuesta.enqueue(new Callback<ArrayList<Usuario>>() {
             @Override
             public void onResponse(Call<ArrayList<Usuario>> call, Response<ArrayList<Usuario>> response) {
+                if (response.isSuccessful()){
                 ArrayList<Usuario> lista = response.body();
                 if(lista.size()>0){
                         Usuario usuario = lista.get(0);
                             Intent intent = new Intent(mainActivity, ActividadConUsuario.class);
                             intent.putExtra("usuario", usuario.getId());
                             startActivity(intent);
-                        System.out.println("Hola");
-                    } System.out.println("Hola");
+                    }
+                }
+
+
             }
 
             @Override
@@ -86,5 +101,6 @@ public class FragmentLogin extends Fragment {
             }
         });
     }
+
 
 }

@@ -3,9 +3,11 @@ package com.example.gestioncliente.Reservas;
 import android.app.DatePickerDialog;
 import android.content.res.Resources;
 import android.icu.text.SimpleDateFormat;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,15 +26,23 @@ import com.example.gestioncliente.ActividadConUsuario;
 import com.example.gestioncliente.Conexión.apiReservas;
 import com.example.gestioncliente.DatePickerFragment;
 import com.example.gestioncliente.Datos.Reserva;
+import com.example.gestioncliente.Encriptado;
+import com.example.gestioncliente.Instalaciones.FragmentInstalaciones;
 import com.example.gestioncliente.R;
 import com.example.gestioncliente.Reservas.FragmentReserva;
 import com.example.gestioncliente.Reservas.ReservaAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.security.CryptoPrimitive;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+
+import javax.crypto.Cipher;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,7 +58,8 @@ public class FragmentReservas extends Fragment {
   /*  private EditText reservaFechaInicio;
     private EditText reservaFechaFin;*/
     private Spinner AñosUsuario,MesesAño;
-    private int dia, mes, año;
+    private int  mes, año;
+    FloatingActionButton IrAInstalaciones;
     public FragmentReservas() {
         // Required empty public constructor
     }
@@ -56,22 +67,33 @@ public class FragmentReservas extends Fragment {
     public FragmentReservas(ActividadConUsuario actividadConUsuario) {
         this.actividadConUsuario= actividadConUsuario;
     }
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         vista= inflater.inflate(R.layout.fragment_reservas, container, false);
         Date fecha = new Date();
-        dia= fecha.getDay();
         mes= fecha.getMonth()+1;
         año = fecha.getYear()+1900;
+        CryptoPrimitive cosa;
+        String texto=Encriptado.get_SHA_512_SecurePassword("hola", "a");
+        System.out.println(texto);
+        String plainText = texto + "a";
 
+        MessageDigest messageDigest = null;
+        try {
+            messageDigest = MessageDigest.getInstance("SHA-512");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        byte[] hash = messageDigest.digest( plainText.getBytes() );
+
+        System.out.println("Result: " + new String(hash));
         System.out.println(año);
         AñosUsuario = vista.findViewById(R.id.AñosUsuario);
         ArrayList<Integer>listaAños = new ArrayList<>();
         int diferencia  = año-actividadConUsuario.usuario.getAnyo_alta();
-        System.out.println("nada");
-        System.out.println(diferencia);
         for (int i=0;i<=diferencia;i++){
             listaAños.add(actividadConUsuario.usuario.getAnyo_alta()+i);
         }
@@ -181,11 +203,20 @@ public class FragmentReservas extends Fragment {
             }
         });
         recyclerView.setAdapter(reservaAdapter);
+        IrAInstalaciones= vista.findViewById(R.id.IrAInstalaciones);
+        IrAInstalaciones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentInstalaciones fragmentInstalaciones=new FragmentInstalaciones(actividadConUsuario);
+                actividadConUsuario.cambiarFragmento(fragmentInstalaciones);
+            }
+        });
+
         //obtenerDatos();
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
-               // getActivity().finishAffinity();
+                getActivity().finishAffinity();
                 // Handle the back button event
 
             }
@@ -194,30 +225,7 @@ public class FragmentReservas extends Fragment {
         return vista;
     }
     /// Datepickersfragment para filtrar por edittext
-  /*  private void showDatePickerDialog() {
-        DatePickerFragment newFragment = DatePickerFragment.newInstance(new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                // +1 because January is zero
-                final String selectedDate = day + "-" + (month+1) + "-" + year;
-                reservaFechaInicio.setText(selectedDate);
-            }
-        });
 
-        newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
-    }
-    private void showDatePickerDialog2() {
-        DatePickerFragment newFragment = DatePickerFragment.newInstance(new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                // +1 because January is zero
-                final String selectedDate = day + "-" + (month+1) + "-" + year;
-                reservaFechaFin.setText(selectedDate);
-            }
-        });
-
-        newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
-    }*/
     private void seleccionarReserva(Reserva reserva)
     {
         FragmentReserva fragmentReserva = new FragmentReserva(actividadConUsuario, this);

@@ -18,7 +18,10 @@ import android.widget.Button;
 import com.example.gestioncliente.ActividadConUsuario;
 import com.example.gestioncliente.FragmentoConfigurarCuenta;
 import com.example.gestioncliente.MainActivity;
+import com.example.gestioncliente.Observaciones.FragmentObservaciones;
 import com.example.gestioncliente.R;
+import com.example.gestioncliente.Reservas.FragmentReservas;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 public class FragmentPerfil extends Fragment {
@@ -27,6 +30,7 @@ public class FragmentPerfil extends Fragment {
     private View vista;
     private RecyclerView recyclerView;
     private PerfilAdapter perfilAdapter;
+    FloatingActionButton IrAObservaciones;
     public FragmentPerfil() {
         // Required empty public constructor
     }
@@ -48,7 +52,14 @@ public class FragmentPerfil extends Fragment {
         String[]opciones = obtenerValoresOpciones();
         perfilAdapter = new PerfilAdapter(getActivity(),opciones);
         recyclerView.setAdapter(perfilAdapter);
-        Resources res = getResources();
+        IrAObservaciones = vista.findViewById(R.id.IrAObservaciones);
+        IrAObservaciones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentObservaciones fragmentObservaciones = new FragmentObservaciones(actividadConUsuario);
+                actividadConUsuario.cambiarFragmento(fragmentObservaciones);
+            }
+        });
         perfilAdapter.setOnItemClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,8 +76,6 @@ public class FragmentPerfil extends Fragment {
                         actividadConUsuario.cambiarFragmento(fragmentoConfigurarCuenta);
                         break;
                     case 2:
-                        break;
-                    case 3:
                         Intent intent= new Intent(actividadConUsuario, MainActivity.class);
                         startActivity(intent);
                         break;
@@ -80,16 +89,17 @@ public class FragmentPerfil extends Fragment {
 
             }
         });*/
-        //OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
-          /*  @Override
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
             public void handleOnBackPressed() {
-                getActivity().finishAffinity(); System.exit(0);
-                // getActivity().finishAffinity();
+                FragmentReservas fragmentReservas= new FragmentReservas(actividadConUsuario);
+                actividadConUsuario.cambiarFragmento(fragmentReservas);
+               
                 // Handle the back button event
 
             }
         };
-        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);*/
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
         return vista;
     }
     private String[] obtenerValoresOpciones(){

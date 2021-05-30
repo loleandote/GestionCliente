@@ -38,13 +38,14 @@ public class ActividadConUsuario extends AppCompatActivity {
     public Usuario usuario;
     public SharedPreferences propiedades;
     public Rol rol;
-
+    public String lenguaje;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actividad_con_usuario);
 
         propiedades =getBaseContext().getSharedPreferences("Idiomas",Context.MODE_PRIVATE);
+        lenguaje = propiedades.getString("Idioma","");
         retrofit= Cliente.obtenerCliente();
         int id=1;
         id = getIntent().getIntExtra("usuario",0);

@@ -19,6 +19,7 @@ import com.example.gestioncliente.ActividadConUsuario;
 import com.example.gestioncliente.Conexión.apiInstalaciones;
 import com.example.gestioncliente.Datos.Instalación;
 import com.example.gestioncliente.R;
+import com.example.gestioncliente.Reservas.FragmentReservas;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -134,9 +135,8 @@ public class FragmentInstalaciones extends Fragment {
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
-                getActivity().finish();
-                // Handle the back button event
-
+                FragmentReservas fragmentReservas= new FragmentReservas(actividadConUsuario);
+                actividadConUsuario.cambiarFragmento(fragmentReservas);
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
@@ -162,6 +162,7 @@ public class FragmentInstalaciones extends Fragment {
     }
     private void seleccionarInstalacion(Instalación instalacion){
         try{
+            System.out.println("hoal");
         FragmentInstalacion fragmentInstalacion= new FragmentInstalacion(actividadConUsuario,this);
         fragmentInstalacion.instalación= instalacion;
         actividadConUsuario.cambiarFragmento(fragmentInstalacion);

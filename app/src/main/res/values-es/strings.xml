@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">FuerzaLol</string>
+    <string name="app_name">GimnasioZucarita</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <!--Textos FragmentLogin FragmentRegistro-->
@@ -23,7 +23,6 @@
     <string-array name="OpcionesPerfil">
         <item>Idioma</item>
         <item>Cambiar datos</item>
-        <item>Cerrar cuenta</item>
         <item>Salir</item>
     </string-array>
     <string-array name="MesesAño">
@@ -61,4 +60,11 @@
     <string name="Reservas">Reservas</string>
     <string name="CerrarCuenta">Cerrar Cuenta</string>
     <string name="Perfil">Perfil</string>
+    <string name="NombreIncorrecto">Nombre incorrecto, debe tener entre 4 y 8 caracteres</string>
+    <string name="ContraseñaIncorrecta">Contraseña incorrecta, debe tener entre 8 y 16 caracteres</string>
+    <string name="CorreoIncorrecto">Correo incorrecto</string>
+    <string name="FechaIncorrecta">La fecha debe ser superior o igual a la actual</string>
+    <string name="Titulo">Titulo:</string>
+    <string name="Observacion">Observación:</string>
+    <string name="ObservacionesDe">"Observaciones de "</string>
 </resources>
