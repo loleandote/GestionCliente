@@ -51,8 +51,6 @@ public class FragmentLogin extends Fragment {
                 String nombre= String.valueOf(nombreEditText.getText());
                 String contraseña= String.valueOf(contraseñaEditText.getText());
                 obtenerUsuario(nombre, contraseña);
-              /*  Intent intent= new Intent(mainActivity, ActividadConUsuario.class);
-                startActivity(intent);*/
             }
         });
         Button registro = vista.findViewById(R.id.IrRegistroFragmentButton);

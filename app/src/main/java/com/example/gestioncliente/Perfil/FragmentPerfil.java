@@ -13,10 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.example.gestioncliente.ActividadConUsuario;
-import com.example.gestioncliente.FragmentoConfigurarCuenta;
 import com.example.gestioncliente.MainActivity;
 import com.example.gestioncliente.Observaciones.FragmentObservaciones;
 import com.example.gestioncliente.R;
@@ -72,7 +70,7 @@ public class FragmentPerfil extends Fragment {
                         actividadConUsuario.cambiarFragmento(fragmentIdiomas);
                         break;
                     case 1:
-                        FragmentoConfigurarCuenta fragmentoConfigurarCuenta=new FragmentoConfigurarCuenta(actividadConUsuario);
+                        FragmentConfigurarCuenta fragmentoConfigurarCuenta=new FragmentConfigurarCuenta(actividadConUsuario);
                         actividadConUsuario.cambiarFragmento(fragmentoConfigurarCuenta);
                         break;
                     case 2:

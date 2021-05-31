@@ -1,4 +1,4 @@
-package com.example.gestioncliente;
+package com.example.gestioncliente.Perfil;
 
 import android.os.Bundle;
 
@@ -10,26 +10,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 
+import com.example.gestioncliente.ActividadConUsuario;
 import com.example.gestioncliente.Conexión.apiUsuario;
 import com.example.gestioncliente.Datos.Usuario;
-import com.example.gestioncliente.Perfil.FragmentPerfil;
+import com.example.gestioncliente.R;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class FragmentoConfigurarCuenta extends Fragment {
+public class FragmentConfigurarCuenta extends Fragment {
 
     ActividadConUsuario actividadConUsuario;
     View vista;
-    public FragmentoConfigurarCuenta() {
+    public FragmentConfigurarCuenta() {
         // Required empty public constructor
     }
 
-    public FragmentoConfigurarCuenta(ActividadConUsuario actividadConUsuario) {
+    public FragmentConfigurarCuenta(ActividadConUsuario actividadConUsuario) {
         this.actividadConUsuario= actividadConUsuario;
     }
 
@@ -38,7 +38,7 @@ public class FragmentoConfigurarCuenta extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        vista= inflater.inflate(R.layout.fragment_fragmento_configurar_cuenta, container, false);
+        vista= inflater.inflate(R.layout.fragment_configurar_cuenta, container, false);
         EditText nombreEditText = vista.findViewById(R.id.nombreEditTextoConfigurar);
         nombreEditText.setText(actividadConUsuario.usuario.getNombre_usuario());
         EditText contraseñaEditText = vista.findViewById(R.id.contraseñaEditTextoConfigurar);

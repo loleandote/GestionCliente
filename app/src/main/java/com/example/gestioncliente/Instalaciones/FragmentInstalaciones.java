@@ -62,7 +62,6 @@ public class FragmentInstalaciones extends Fragment {
                 if (actividadConUsuario.rol!=null && actividadConUsuario.rol.isRealiza_reserva()){
                     instalacionPulsada= recyclerView.getChildAdapterPosition(v);
                     Instalación instalación =instalaciónAdapter.lista.get(instalacionPulsada);
-                    System.out.println(instalación.getNombre());
                     seleccionarInstalacion(instalación);
                 }
 
