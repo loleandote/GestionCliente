@@ -55,6 +55,11 @@
     <item>Nombre a-z</item>
     <item>Nombre z-a</item>
     </string-array>
+    <string-array name="TiposInstalaciones">
+        <item>Todos</item>
+        <item>Tenis</item>
+        <item>Baloncesto</item>
+    </string-array>
     <!--Opciones nav Menu-->
     <string name="Instalaciones">Instalaciones</string>
     <string name="Reservas">Reservas</string>
@@ -67,4 +72,5 @@
     <string name="Titulo">Titulo:</string>
     <string name="Observacion">Observación:</string>
     <string name="ObservacionesDe">"Observaciones de "</string>
+    <string name="CreditosInsuficientes">No tienes suficientes creditos</string>
 </resources>

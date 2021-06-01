@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,6 +40,7 @@ public class ActividadConUsuario extends AppCompatActivity {
     public SharedPreferences propiedades;
     public Rol rol;
     public String lenguaje;
+    public Resources resources;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,23 +49,15 @@ public class ActividadConUsuario extends AppCompatActivity {
         propiedades =getBaseContext().getSharedPreferences("Idiomas",Context.MODE_PRIVATE);
         lenguaje = propiedades.getString("Idioma","");
         retrofit= Cliente.obtenerCliente();
-        int id=1;
+        int id;
         id = getIntent().getIntExtra("usuario",0);
-        if(id==0)
-            id =1;
         obtenerUsuario(id);
-
+resources= getResources();
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.icons8_menu_24);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         drawerLayout = findViewById(R.id.drawerLayout);
         navView = findViewById(R.id.navView);
-        Menu menuses=navView.getMenu();
-        for (int i=0; i<menuses.size(); i++){
-            if (i==0){
-
-            }
-        }
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -135,7 +129,6 @@ public class ActividadConUsuario extends AppCompatActivity {
            public void onResponse(Call<ArrayList<Rol>> call, Response<ArrayList<Rol>> response) {
                if (response.isSuccessful()&& response.body().size()>0) {
                    rol = response.body().get(0);
-                   System.out.println(rol.getId());
                    FragmentReservas fragmentReservas = new FragmentReservas();
                    cambiarFragmento(fragmentReservas);
                }
@@ -161,7 +154,6 @@ public class ActividadConUsuario extends AppCompatActivity {
                 }
             }
         }
-
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frameLayoutPrincipal,fragment);
@@ -174,7 +166,5 @@ public class ActividadConUsuario extends AppCompatActivity {
         editor.putString("Idioma",idioma);
         editor.commit();
     }
-    private void configurarMenu(){
-        
-    }
+
 }

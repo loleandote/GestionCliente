@@ -11,7 +11,7 @@ public class Instalación {
     private int id;
     @SerializedName("tipo")
     @Expose
-    private String tipo;
+    private int tipo;
     @SerializedName("nombre")
     @Expose
     private String nombre;
@@ -34,7 +34,7 @@ public class Instalación {
     public Instalación() {
     }
 
-    public Instalación(int id, String tipo, String nombre, int precio_hora, int tiempo_min, int tiempo_max, ArrayList<String> imagenes, ArrayList<Integer> horario) {
+    public Instalación(int id, int tipo, String nombre, int precio_hora, int tiempo_min, int tiempo_max, ArrayList<String> imagenes, ArrayList<Integer> horario) {
         this.id = id;
         this.tipo = tipo;
         this.nombre = nombre;
@@ -53,11 +53,11 @@ public class Instalación {
         this.id = id;
     }
 
-    public String getTipo() {
+    public int getTipo() {
         return tipo;
     }
 
-    public void setTipo(String tipo) {
+    public void setTipo(int tipo) {
         this.tipo = tipo;
     }
 

@@ -53,22 +53,24 @@ public class FragmentInstalaciones extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-
-        instalaciónAdapter = new InstalaciónAdapter(getActivity());
+        Resources res = getResources();
+        String[]tipos = res.getStringArray(R.array.TiposInstalaciones);
+        instalaciónAdapter = new InstalaciónAdapter(getActivity(), tipos);
         recyclerView.setAdapter(instalaciónAdapter);
         instalaciónAdapter.setOnItemClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (actividadConUsuario.rol!=null && actividadConUsuario.rol.isRealiza_reserva()){
+                if (actividadConUsuario.rol!=null & actividadConUsuario.rol.isRealiza_reserva()){
                     instalacionPulsada= recyclerView.getChildAdapterPosition(v);
                     Instalación instalación =instalaciónAdapter.lista.get(instalacionPulsada);
                     seleccionarInstalacion(instalación);
+
                 }
 
             }
         });
         Spinner OrdenarInstalaciones = vista.findViewById(R.id.OrdenarInstalaciones);
-        Resources res = getResources();
+
         String[] opciones = res.getStringArray(R.array.OpcionesInstalaciones);
         ArrayAdapter<String> opcionesAdapter=new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item,opciones);
         OrdenarInstalaciones.setAdapter(opcionesAdapter);
@@ -77,7 +79,7 @@ public class FragmentInstalaciones extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 ArrayList<Instalación>lista = instalaciónAdapter.lista;
                 switch (position){
-                    case 0:
+                    case 3:
                         Collections.sort(lista, new Comparator<Instalación>() {
                             @Override
                             public int compare(Instalación o1, Instalación o2) {
@@ -85,7 +87,7 @@ public class FragmentInstalaciones extends Fragment {
                             }
                         });
                         break;
-                    case 1:
+                    case 2:
                         Collections.sort(lista, new Comparator<Instalación>() {
                             @Override
                             public int compare(Instalación o1, Instalación o2) {
@@ -93,7 +95,7 @@ public class FragmentInstalaciones extends Fragment {
                             }
                         });
                         break;
-                    case 2:
+                    case 1:
                         Collections.sort(lista, new Comparator<Instalación>() {
                             @Override
                             public int compare(Instalación o1, Instalación o2) {
@@ -107,7 +109,7 @@ public class FragmentInstalaciones extends Fragment {
                             }
                         });
                         break;
-                    case 3:
+                    case 0:
                         Collections.sort(lista, new Comparator<Instalación>() {
                             @Override
                             public int compare(Instalación o1, Instalación o2) {
@@ -122,7 +124,7 @@ public class FragmentInstalaciones extends Fragment {
                         });
                         break;
                 }
-
+        instalaciónAdapter.cambiarLista(lista);
             }
 
             @Override
@@ -149,6 +151,18 @@ public class FragmentInstalaciones extends Fragment {
             public void onResponse(Call<ArrayList<Instalación>> call, Response<ArrayList<Instalación>> response) {
                 if (response.isSuccessful()){
                     ArrayList<Instalación>listaInstalaciones = response.body();
+                    Collections.sort(listaInstalaciones, new Comparator<Instalación>() {
+                        @Override
+                        public int compare(Instalación o1, Instalación o2) {
+                            int precio1 =o1.getPrecio_hora();
+                            int precio2=o2.getPrecio_hora();
+                            if(precio1<precio2)
+                                return 1;
+                            if (precio1==precio2)
+                                return 0;
+                            return -1;
+                        }
+                    });
                     instalaciónAdapter.anyadirALista(listaInstalaciones);
                 }
             }
@@ -161,13 +175,12 @@ public class FragmentInstalaciones extends Fragment {
     }
     private void seleccionarInstalacion(Instalación instalacion){
         try{
-            System.out.println("hoal");
-        FragmentInstalacion fragmentInstalacion= new FragmentInstalacion(actividadConUsuario,this);
+        FragmentInstalacion fragmentInstalacion= new FragmentInstalacion(actividadConUsuario, this);
         fragmentInstalacion.instalación= instalacion;
         actividadConUsuario.cambiarFragmento(fragmentInstalacion);
     }catch (Exception ex)
         {
-            System.out.println(ex.getCause());
+            System.out.println(ex.getMessage());
         }
     }
 }

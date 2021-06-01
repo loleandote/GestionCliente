@@ -58,7 +58,6 @@ public class FragmentInstalacion extends Fragment {
     private int año;
     private Reserva reserva;
     private FragmentInstalaciones fragmentInstalaciones;
-    Resources resources= getResources();
 
     public FragmentInstalacion() {
         // Required empty public constructor
@@ -70,11 +69,11 @@ public class FragmentInstalacion extends Fragment {
     public FragmentInstalacion(ActividadConUsuario actividadConUsuario, FragmentInstalaciones fragmentInstalaciones) {
         this.actividadConUsuario = actividadConUsuario;
         this.fragmentInstalaciones = fragmentInstalaciones;
+
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    @Override
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -83,25 +82,31 @@ public class FragmentInstalacion extends Fragment {
         horaInicio=0;
         horaFin=0;
         ImageView imageView = vista.findViewById(R.id.InstalacionImagen);
-        Picasso.get().load(instalación.getImagenes().get(0))
-                .placeholder(R.drawable.icons8_squats_30)
-                .error(R.drawable.icons8_error_cloud_48)
-                //.resize(80,60)
-                //.centerCrop()
-                .into(imageView);
-        LocalDate fecha = LocalDate.now();
-        dia = fecha.getDayOfMonth();
-        mes= fecha.getMonth().getValue();
-        año = fecha.getYear();
-        String dia2= String.valueOf(fecha.getDayOfMonth());
-        if (fecha.getDayOfMonth()<10){
+        try {
+            Picasso.get().load(instalación.getImagenes().get(0))
+                    .placeholder(R.drawable.icons8_squats_30)
+                    .error(R.drawable.icons8_error_cloud_48)
+                    //.resize(80,60)
+                    //.centerCrop()
+                    .into(imageView);
+
+        }catch (java.lang.IllegalArgumentException exception){
+System.out.println(exception.getMessage());
+        }
+
+      Date fecha = new Date();
+        dia = fecha.getDate();
+        mes= fecha.getMonth()+1;
+        año = fecha.getYear()+1900;
+        String dia2= String.valueOf(fecha.getDate());
+        if (fecha.getDate()<10){
             dia2="0"+dia2;
         }
-        String mes2= String.valueOf(fecha.getMonthValue());
-        if(fecha.getMonthValue()<10){
+        String mes2= String.valueOf(mes);
+        if(fecha.getMonth()<10){
             mes2="0"+mes2;
         }
-       String Textodia = dia2+"-"+mes2+"-"+String.valueOf(fecha.getYear());
+       String Textodia = dia2+"-"+mes2+"-"+String.valueOf(año);
 
         DiaEditText = vista.findViewById(R.id.DiaEditText);
         DiaEditText.setText(Textodia);
@@ -122,7 +127,6 @@ public class FragmentInstalacion extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 horaInicio = listaInicio.get(position);
-                //System.out.println(position);
             }
 
             @Override
@@ -147,39 +151,20 @@ public class FragmentInstalacion extends Fragment {
         reservar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                apiReservas apiReservas = actividadConUsuario.retrofit.create(apiReservas.class);
-                int diferencia = horaFin - horaInicio;
-                if (horaInicio>0 && horaFin>0&& diferencia > 0 && diferencia < 3) {
-                    System.out.println(diferencia);
-                    Call<Reserva> respuesta = apiReservas.guardaReserva(actividadConUsuario.usuario.getId(), instalación.getId(), instalación.getImagenes().get(0),instalación.getNombre(), dia,mes,año, horaInicio, horaFin, false, false, true,false);
-                    respuesta.enqueue(new Callback<Reserva>() {
-                        @Override
-                        public void onResponse(Call<Reserva> call, Response<Reserva> response) {
-                            actualizarSaldoUsuario(response.body());
-                        }
-
-                        @Override
-                        public void onFailure(Call<Reserva> call, Throwable t) {
-
-                        }
-                    });
-                }
+                actualizarSaldoUsuario();
             }
         });
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
                 // Handle the back button event
-             volverAInstalaciones();
+                actividadConUsuario.cambiarFragmento(fragmentInstalaciones);
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
         return vista;
     }
-    private void volverAInstalaciones()
-    {
-        actividadConUsuario.cambiarFragmento(fragmentInstalaciones);
-    }
+
     private void showDatePickerDialog() {
         DatePickerFragment newFragment = DatePickerFragment.newInstance(new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -187,41 +172,41 @@ public class FragmentInstalacion extends Fragment {
                 // +1 because January is zero
                 Date fecha = new Date(year,month+1, day);
                 dia = day;
-                mes= month;
+                mes= fecha.getMonth();
+                System.out.println(mes);
                 año= year;
                 Date fechaActual = new Date();
-                if(fecha.compareTo(fechaActual)>0){
-                    long diffInDays = ( (fecha.getTime() - fechaActual.getTime())
+                if(fecha.compareTo(fechaActual)>0) {
+                    long diffInDays = ((fecha.getTime() - fechaActual.getTime())
                     );
-                    double diferencia = Math.floor(diffInDays/(1000*3600*24));
-                    diferencia= diferencia-693987;
-                    System.out.println(diferencia);
-                    System.out.println(String.valueOf(day + "-" + (month+1) + "-" + year));
-                    System.out.println(fecha.getDay()+"-"+fecha.getMonth()+"-"+fecha.getYear());
-                    //System.out.println(fecha.toString());
+                    double diferencia = Math.floor(diffInDays / (1000 * 3600 * 24));
+                    diferencia = diferencia - 693987;
 
-                    System.out.println(fechaActual.toString());
-                    String mes2 = String.valueOf(month+1);
-                    String dia2= String.valueOf(day);
-                    if (diferencia<=14 && diferencia>0){
-                        horaInicio=0;
-                        horaFin=0;
-                        if(month+1<10){
-                            mes2="0"+mes2;
+
+                    String mes2 = String.valueOf(mes);
+                    String dia2 = String.valueOf(day);
+                    if (diferencia <= 14 && diferencia > 0) {
+                        horaInicio = 0;
+                        horaFin = 0;
+                        if (month + 1 < 10) {
+                            mes2 = "0" + mes2;
                         }
-                        if (day<10){
-                            dia2="0"+dia2;
+                        if (day < 10) {
+                            dia2 = "0" + dia2;
                         }
                         String textodia = dia2 + "-" + mes2 + "-" + year;
                         DiaEditText.setText(textodia);
-                        listaInicio= new ArrayList<>();
-                        listaInicio =instalación.getHorario();
-                        listaFin= new ArrayList<>();
-                        for( int i =0; i<listaInicio.size();i++){
-                            listaFin.add(listaInicio.get(i)+1);
+                        listaInicio = new ArrayList<>();
+                        listaInicio = instalación.getHorario();
+                        listaFin = new ArrayList<>();
+                        for (int i = 0; i < listaInicio.size(); i++) {
+                            listaFin.add(listaInicio.get(i) + 1);
                         }
                         obtenerReservasDia();
-                    }else Toast.makeText(getActivity(), resources.getString(R.string.FechaIncorrecta), Toast.LENGTH_SHORT).show();
+                    } else
+                         {
+                        Toast.makeText(getActivity(),actividadConUsuario.resources.getString(R.string.FechaIncorrecta), Toast.LENGTH_SHORT).show();
+                }
 
 
                 }
@@ -231,24 +216,43 @@ public class FragmentInstalacion extends Fragment {
 
         newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
     }
-    private void actualizarSaldoUsuario(Reserva reserva){
+    private void actualizarSaldoUsuario(){
         apiUsuario apiUsuario= actividadConUsuario.retrofit.create(apiUsuario.class);
         int creditos= actividadConUsuario.usuario.getCreditos()-instalación.getPrecio_hora()*(horaFin-horaInicio);
         if (creditos>=0) {
             actividadConUsuario.usuario.setCreditos(creditos);
-            Call<Usuario> respuesta = apiUsuario.actualizarUsuario(actividadConUsuario.usuario.getId(), actividadConUsuario.usuario);
-            respuesta.enqueue(new Callback<Usuario>() {
+           Call<Usuario>respuesta= apiUsuario.actualizarUsuario(actividadConUsuario.usuario.getId(),actividadConUsuario.usuario);
+           respuesta.enqueue(new Callback<Usuario>() {
+               @Override
+               public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                   if(response.isSuccessful())
+                       RealizarReserva();
+               }
+
+
+               @Override
+               public void onFailure(Call<Usuario> call, Throwable t) {
+
+               }
+           });
+
+        }else Toast.makeText(getActivity(), actividadConUsuario.resources.getString(R.string.CreditosInsuficientes), Toast.LENGTH_SHORT).show();
+    }
+
+    private void RealizarReserva(){
+        apiReservas apiReservas = actividadConUsuario.retrofit.create(apiReservas.class);
+        int diferencia = horaFin - horaInicio;
+        if (horaInicio>0 && horaFin>0&& diferencia > 0 && diferencia < 3) {
+            Call<Reserva> respuesta = apiReservas.guardaReserva(actividadConUsuario.usuario.getId(), instalación.getId(), instalación.getImagenes().get(0),instalación.getNombre(), dia,mes,año, horaInicio, horaFin, false, false, false,true);
+            respuesta.enqueue(new Callback<Reserva>() {
                 @Override
-                public void onResponse(Call<Usuario> call, Response<Usuario> response) {
-                    apiReservas apiReservas = actividadConUsuario.retrofit.create(com.example.gestioncliente.Conexión.apiReservas.class);
-                    reserva.setPagado(true);
-                    apiReservas.actualizarReserva(reserva.getId(), reserva);
+                public void onResponse(Call<Reserva> call, Response<Reserva> response) {
                     FragmentReservas fragmentReservas = new FragmentReservas(actividadConUsuario);
                     actividadConUsuario.cambiarFragmento(fragmentReservas);
                 }
 
                 @Override
-                public void onFailure(Call<Usuario> call, Throwable t) {
+                public void onFailure(Call<Reserva> call, Throwable t) {
 
                 }
             });
@@ -261,7 +265,6 @@ public class FragmentInstalacion extends Fragment {
             @Override
             public void onResponse(Call<ArrayList<Reserva>> call, Response<ArrayList<Reserva>> response) {
                 reservasDia=response.body();
-                System.out.println(response.body().size());
                 for (int i=0;i<response.body().size();i++) {
 
                     int diferencia = response.body().get(i).getHora_fin() - response.body().get(i).getHora_inicio();

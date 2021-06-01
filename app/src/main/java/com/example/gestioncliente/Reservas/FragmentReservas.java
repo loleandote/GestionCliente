@@ -76,7 +76,6 @@ public class FragmentReservas extends Fragment {
         Date fecha = new Date();
         mes= fecha.getMonth()+1;
         año = fecha.getYear()+1900;
-        CryptoPrimitive cosa;
         String texto=Encriptado.get_SHA_512_SecurePassword("hola", "a");
         System.out.println(texto);
         String plainText = texto + "a";
@@ -90,7 +89,6 @@ public class FragmentReservas extends Fragment {
         byte[] hash = messageDigest.digest( plainText.getBytes() );
 
         System.out.println("Result: " + new String(hash));
-        System.out.println(año);
         AñosUsuario = vista.findViewById(R.id.AñosUsuario);
         ArrayList<Integer>listaAños = new ArrayList<>();
         int diferencia  = año-actividadConUsuario.usuario.getAnyo_alta();
@@ -118,21 +116,7 @@ public class FragmentReservas extends Fragment {
 
             }
         });
-        ///Inicializacion editText
-        /*reservaFechaInicio= vista.findViewById(R.id.ReservaFechaInicio);
-        reservaFechaInicio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDatePickerDialog();
-            }
-        });
-        reservaFechaFin= vista.findViewById(R.id.ReservaFechaFin);
-        reservaFechaFin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDatePickerDialog2();
-            }
-        });*/
+
         recyclerView = vista.findViewById(R.id.ReciclerViewReservas);
 
         Spinner OrdenarReservas = vista.findViewById(R.id.OrdenarReservas);
@@ -224,7 +208,6 @@ public class FragmentReservas extends Fragment {
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
         return vista;
     }
-    /// Datepickersfragment para filtrar por edittext
 
     private void seleccionarReserva(Reserva reserva)
     {

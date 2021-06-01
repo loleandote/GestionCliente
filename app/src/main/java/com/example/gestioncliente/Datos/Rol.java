@@ -13,7 +13,7 @@ public class Rol {
 
     @SerializedName("realiza_reservas")
     @Expose
-    private boolean realiza_reserva;
+    private boolean realiza_reservas;
     @SerializedName("cancela_reserva")
     @Expose
     private boolean cancela_reserva;
@@ -39,10 +39,10 @@ public class Rol {
     @Expose
     private boolean expota_importa;
 
-    public Rol(int id, String nombre_rol, boolean realiza_reserva, boolean cancela_reserva, boolean modificar_usuario, boolean baja_socio, boolean realiza_informe, boolean ver_grafico, boolean mod_contra_otros, boolean mod_permiso, boolean expota_importa) {
+    public Rol(int id, String nombre_rol, boolean realiza_reservas, boolean cancela_reserva, boolean modificar_usuario, boolean baja_socio, boolean realiza_informe, boolean ver_grafico, boolean mod_contra_otros, boolean mod_permiso, boolean expota_importa) {
         this.id = id;
         this.nombre_rol = nombre_rol;
-        this.realiza_reserva = realiza_reserva;
+        this.realiza_reservas = realiza_reservas;
         this.cancela_reserva = cancela_reserva;
         this.modificar_usuario = modificar_usuario;
         this.baja_socio = baja_socio;
@@ -71,11 +71,11 @@ public class Rol {
 
 
     public boolean isRealiza_reserva() {
-        return realiza_reserva;
+        return realiza_reservas;
     }
 
-    public void setRealiza_reserva(boolean realiza_reserva) {
-        this.realiza_reserva = realiza_reserva;
+    public void setRealiza_reservas(boolean realiza_reservas) {
+        this.realiza_reservas = realiza_reservas;
     }
 
     public boolean isCancela_reserva() {

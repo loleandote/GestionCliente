@@ -53,6 +53,11 @@
         <item>Nombre z-a</item>
         <item>Fecha \u2191</item>
         <item>Fecha \u2193</item>
+    </string-array>.
+    <string-array name="TiposInstalaciones">
+        <item>Todos</item>
+        <item>Tenis</item>
+        <item>Baloncesto</item>
     </string-array>
     <!--Opciones nav Menu-->
     <string name="Instalaciones">Instalaciones</string>
@@ -63,6 +68,7 @@
     <string name="ContraseñaIncorrecta">Contraseña incorrecta, debe tener entre 8 y 16 caracteres</string>
     <string name="CorreoIncorrecto">Correo incorrecto</string>
     <string name="FechaIncorrecta">La fecha debe ser superior o igual a la actual</string>
+    <string name="CreditosInsuficientes">No tienes suficientes monedos</string>
     <string name="Titulo">Titulo:</string>
     <string name="Observacion">Observación:</string>
     <string name="ObservacionesDe">Observaciones de </string>

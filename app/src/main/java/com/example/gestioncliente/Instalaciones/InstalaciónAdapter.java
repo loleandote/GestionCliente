@@ -20,17 +20,18 @@ public class InstalaciónAdapter extends RecyclerView.Adapter<InstalaciónAdapte
     ArrayList<Instalación> lista;
     private Context context;
     private View.OnClickListener onClickListener;
+    private String[]listatipos;
 
-    public InstalaciónAdapter(Context context) {
+    public InstalaciónAdapter(Context context, String[]listatipos) {
         lista= new ArrayList<>();
         this.context = context;
+        this.listatipos=listatipos;
     }
 
     @NonNull
     @Override
     public MiViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i){
         LayoutInflater inflater =LayoutInflater.from(viewGroup.getContext());
-        System.out.println("hola");
         View view=inflater.inflate(R.layout.elementos_lista_instalacion,viewGroup,false);
         view.setOnClickListener(this.onClickListener);
       MiViewHolder miViewHolder= new MiViewHolder(view);
@@ -40,7 +41,13 @@ public class InstalaciónAdapter extends RecyclerView.Adapter<InstalaciónAdapte
     @Override
     public void onBindViewHolder(@NonNull MiViewHolder holder, int position) {
         try {
-            Picasso.get().load(lista.get(position).getImagenes().get(0))
+            System.out.println(lista.get(position).getImagenes().get(0)+"-----------------------------");
+            String imagen="";
+            if(lista.get(position).getImagenes().get(0).equals(""))
+                imagen= "https://pbs.twimg.com/profile_images/3413353030/4f4eef045822872aebd9ab1fa5cbf1a2_400x400.jpeg";
+            else
+                imagen=lista.get(position).getImagenes().get(0);
+            Picasso.get().load(imagen)
                         .placeholder(R.drawable.icons8_squats_30)
                     .error(R.drawable.icons8_error_cloud_48)
                     //.resize(80,60)
@@ -49,13 +56,8 @@ public class InstalaciónAdapter extends RecyclerView.Adapter<InstalaciónAdapte
         }catch (IllegalArgumentException ex){
 
         }
-
-
-        String texto = String.valueOf(lista.get(position).getId());
-        //Integer nombre = lista.get(postion).getId_reserva();
-        //holder.nombreTextView.setText(texto);
         holder.nombreTextView.setText(lista.get(position).getNombre());
-        String tipo = String.valueOf(lista.get(position).getTipo());
+        String tipo = String.valueOf(listatipos[lista.get(position).getTipo()]);
         holder.tipoTextView.setText(tipo);
     }
 
@@ -72,6 +74,10 @@ public class InstalaciónAdapter extends RecyclerView.Adapter<InstalaciónAdapte
     }
     public void anyadirALista(ArrayList<Instalación> lista){
         this.lista.addAll(lista);
+        notifyDataSetChanged(); // Actualizamos el recyclerView
+    }
+    public void cambiarLista(ArrayList<Instalación> lista){
+        this.lista=(lista);
         notifyDataSetChanged(); // Actualizamos el recyclerView
     }
 

@@ -31,7 +31,6 @@ public class FragmentObservaciones extends Fragment {
   ActividadConUsuario actividadConUsuario;
   View vista;
     ObservaciónAdapter observaciónAdapter;
-
     RecyclerView recyclerView;
     public FragmentObservaciones() {
         // Required empty public constructor
@@ -48,11 +47,11 @@ public class FragmentObservaciones extends Fragment {
         vista= inflater.inflate(R.layout.fragment_observaciones, container, false);
         TextView TituloDeLasObservaciones= vista.findViewById(R.id.TituloDeLasObservaciones);
         Resources res = getResources();
-        if (actividadConUsuario.lenguaje=="es"|| actividadConUsuario.lenguaje=="")
-        TituloDeLasObservaciones.setText(res.getString(R.string.ObservacionesDe)+actividadConUsuario.usuario.getNombre_usuario());
+        if (actividadConUsuario.lenguaje.equals("es")|| actividadConUsuario.lenguaje.equals("")) {
+            TituloDeLasObservaciones.setText( res.getString(R.string.ObservacionesDe) + actividadConUsuario.usuario.getNombre_usuario());
+        }
         else
             TituloDeLasObservaciones.setText(actividadConUsuario.usuario.getNombre_usuario()+res.getString(R.string.ObservacionesDe));
-
         recyclerView = vista.findViewById(R.id.ReciclerviewObservaciones);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);

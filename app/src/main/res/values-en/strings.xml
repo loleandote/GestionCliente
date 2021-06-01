@@ -53,6 +53,11 @@
     <string name="AccederLogin">log in</string>
     <string name="RegistroLogin">Register</string>
     <string name="GuardarCambios">Save changes</string>
+    <string-array name="TiposInstalaciones">
+        <item>All</item>
+        <item>Tennis</item>
+        <item>Basketball</item>
+    </string-array>
     <string name="NombreIncorrecto">Invalid name, it must be between 4 and 8 characters</string>
     <string name="CorreoIncorrecto">Invaid email</string>
     <string name="ContraseñaIncorrecta">Invalid password, must between 8 and 16 characteres</string>
@@ -60,4 +65,5 @@
     <string name="Titulo">Title:</string>
     <string name="Observacion">Observation:</string>
     <string name="ObservacionesDe">\'s observations</string>
+    <string name="CreditosInsuficientes">You don\'t have enough monedos</string>
 </resources>
