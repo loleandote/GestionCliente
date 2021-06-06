@@ -20,6 +20,7 @@ import com.example.gestioncliente.Datos.Rol;
 import com.example.gestioncliente.Datos.Usuario;
 import com.example.gestioncliente.MainActivity;
 import com.example.gestioncliente.R;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.EmptyStackException;
@@ -73,6 +74,8 @@ public class FragmentLogin extends Fragment {
         return vista;
     }
     private void obtenerUsuario(String nombre, String contraseña){
+        Snackbar.make(vista, "Esto es una prueba", Snackbar.LENGTH_LONG)
+                .show();
         apiUsuario apiUsuario = mainActivity.retrofit.create(com.example.gestioncliente.Conexión.apiUsuario.class);
         Call<ArrayList<Usuario>> respuesta=apiUsuario.obtenerUsuario(nombre, contraseña, false, false, true);
        // Call<ArrayList<Usuario>> respuesta=apiUsuario.obtenerUsuario();
@@ -88,7 +91,8 @@ public class FragmentLogin extends Fragment {
                             startActivity(intent);
                     }
                 }
-
+                Snackbar.make(vista, "Esto es una prueba", Snackbar.LENGTH_LONG)
+                        .show();
 
             }
 
