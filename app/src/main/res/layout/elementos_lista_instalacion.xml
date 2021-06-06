@@ -23,6 +23,6 @@
             android:id="@+id/tipoInstalacionTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="descripcion"/>
+            android:text="tipo"/>
     </LinearLayout>
 </LinearLayout>

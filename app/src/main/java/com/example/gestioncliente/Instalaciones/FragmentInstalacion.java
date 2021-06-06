@@ -30,6 +30,7 @@ import com.example.gestioncliente.Datos.Reserva;
 import com.example.gestioncliente.Datos.Usuario;
 import com.example.gestioncliente.R;
 import com.example.gestioncliente.Reservas.FragmentReservas;
+import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
 import java.time.LocalDate;
@@ -247,6 +248,8 @@ System.out.println(exception.getMessage());
             respuesta.enqueue(new Callback<Reserva>() {
                 @Override
                 public void onResponse(Call<Reserva> call, Response<Reserva> response) {
+                    Snackbar.make(vista, actividadConUsuario.resources.getString(R.string.ReservaRealizada), Snackbar.LENGTH_LONG)
+                            .show();
                     FragmentReservas fragmentReservas = new FragmentReservas(actividadConUsuario);
                     actividadConUsuario.cambiarFragmento(fragmentReservas);
                 }

@@ -72,4 +72,5 @@
     <string name="Titulo">Titulo:</string>
     <string name="Observacion">Observación:</string>
     <string name="ObservacionesDe">Observaciones de </string>
+    <string name="ReservaRealizada">Reserva realizada</string>
 </resources>

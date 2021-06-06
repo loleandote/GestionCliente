@@ -66,4 +66,5 @@
     <string name="Observacion">Observation:</string>
     <string name="ObservacionesDe">\'s observations</string>
     <string name="CreditosInsuficientes">You don\'t have enough monedos</string>
+    <string name="ReservaRealizada">Booking done</string>
 </resources>

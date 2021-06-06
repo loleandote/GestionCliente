@@ -55,6 +55,23 @@ public class FragmentInstalaciones extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         Resources res = getResources();
         String[]tipos = res.getStringArray(R.array.TiposInstalaciones);
+        Spinner FiltroTipoInstalaciones = vista.findViewById(R.id.FiltroTipoInstalaciones);
+        FiltroTipoInstalaciones.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position==0){
+                    obtenerDatos();
+                }else
+                {
+                    obtenerDatosPorTipo(position);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         instalaciónAdapter = new InstalaciónAdapter(getActivity(), tipos);
         recyclerView.setAdapter(instalaciónAdapter);
         instalaciónAdapter.setOnItemClickListener(new View.OnClickListener() {
@@ -163,6 +180,24 @@ public class FragmentInstalaciones extends Fragment {
                             return -1;
                         }
                     });
+                    instalaciónAdapter.anyadirALista(listaInstalaciones);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Instalación>> call, Throwable t) {
+
+            }
+        });
+    }
+    private void  obtenerDatosPorTipo(int tipo){
+        apiInstalaciones apiInstalaciones = actividadConUsuario.retrofit.create(apiInstalaciones.class);
+        Call<ArrayList<Instalación>> respuesta = apiInstalaciones.obtenerInstalacionesPorTipo(tipo);
+        respuesta.enqueue(new Callback<ArrayList<Instalación>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Instalación>> call, Response<ArrayList<Instalación>> response) {
+                if (response.isSuccessful()){
+                    ArrayList<Instalación>listaInstalaciones = response.body();
                     instalaciónAdapter.anyadirALista(listaInstalaciones);
                 }
             }

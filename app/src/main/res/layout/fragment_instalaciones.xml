@@ -5,22 +5,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Instalaciones.FragmentInstalaciones">
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+<LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
     <Spinner
         android:id="@+id/OrdenarInstalaciones"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent" />
-
+    <Spinner
+        android:id="@+id/FiltroTipoInstalaciones"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent" />
+</LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ReciclerViewInstalaciones"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:layout_constraintTop_toBottomOf="@+id/OrdenarInstalaciones" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
 
 
 

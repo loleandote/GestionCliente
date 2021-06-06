@@ -1,5 +1,6 @@
 package com.example.gestioncliente;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -8,6 +9,8 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.text.Html;
+import android.widget.TextView;
 
 import com.example.gestioncliente.Conexión.Cliente;
 import com.example.gestioncliente.Inicio.FragmentLogin;
@@ -41,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         getBaseContext().getResources().updateConfiguration(config, this.getResources().getDisplayMetrics());
         retrofit = Cliente.obtenerCliente();
         //cargarPropiedad();
+
         FragmentLogin fragmentLogin = new FragmentLogin(this);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

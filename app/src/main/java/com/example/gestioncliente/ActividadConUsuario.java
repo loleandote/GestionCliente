@@ -14,6 +14,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toolbar;
 
 import com.example.gestioncliente.Conexión.Cliente;
 import com.example.gestioncliente.Conexión.apiRol;
@@ -45,7 +46,6 @@ public class ActividadConUsuario extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actividad_con_usuario);
-
         propiedades =getBaseContext().getSharedPreferences("Idiomas",Context.MODE_PRIVATE);
         lenguaje = propiedades.getString("Idioma","");
         retrofit= Cliente.obtenerCliente();
@@ -53,7 +53,6 @@ public class ActividadConUsuario extends AppCompatActivity {
         id = getIntent().getIntExtra("usuario",0);
         obtenerUsuario(id);
 resources= getResources();
-
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.icons8_menu_24);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         drawerLayout = findViewById(R.id.drawerLayout);

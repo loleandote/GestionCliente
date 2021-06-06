@@ -91,9 +91,6 @@ public class FragmentLogin extends Fragment {
                             startActivity(intent);
                     }
                 }
-                Snackbar.make(vista, "Esto es una prueba", Snackbar.LENGTH_LONG)
-                        .show();
-
             }
 
             @Override

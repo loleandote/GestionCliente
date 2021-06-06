@@ -43,8 +43,9 @@
         android:id="@+id/nombreEditTexto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
         android:background="@color/white"
+
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
          />
 </com.google.android.material.textfield.TextInputLayout>
@@ -76,8 +77,8 @@
                     android:id="@+id/contraseñaEditTexto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="18dp"
                     android:background="@color/white"
+                    android:textSize="18dp"
                     android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 
