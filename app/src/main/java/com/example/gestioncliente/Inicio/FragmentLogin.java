@@ -74,8 +74,7 @@ public class FragmentLogin extends Fragment {
         return vista;
     }
     private void obtenerUsuario(String nombre, String contraseña){
-        Snackbar.make(vista, "Esto es una prueba", Snackbar.LENGTH_LONG)
-                .show();
+
         apiUsuario apiUsuario = mainActivity.retrofit.create(com.example.gestioncliente.Conexión.apiUsuario.class);
         Call<ArrayList<Usuario>> respuesta=apiUsuario.obtenerUsuario(nombre, contraseña, false, false, true);
        // Call<ArrayList<Usuario>> respuesta=apiUsuario.obtenerUsuario();

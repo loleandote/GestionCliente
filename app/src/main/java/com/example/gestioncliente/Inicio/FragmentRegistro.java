@@ -31,7 +31,7 @@ import retrofit2.Response;
 public class FragmentRegistro extends Fragment {
     private MainActivity mainActivity;
     View vista;
-
+    private LayoutInflater layoutInflater;
 
     public FragmentRegistro() {
         // Required empty public constructor
@@ -44,6 +44,7 @@ public class FragmentRegistro extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         vista= inflater.inflate(R.layout.fragment_registro, container, false);
+        layoutInflater= inflater;
         Resources resources= getResources();
         EditText nombreEditText = vista.findViewById(R.id.nombreEditTexto);
         EditText contraseñaEditText = vista.findViewById(R.id.contraseñaEditTexto);
@@ -60,10 +61,11 @@ public class FragmentRegistro extends Fragment {
                    obtenerUsuario(nombre,contraseña, correo);
                 else
                     if(nombre.length()>3&&nombre.length()<9)
-                        Toast.makeText(getActivity(), resources.getString(R.string.NombreIncorrecto), Toast.LENGTH_SHORT).show();
-                    else if(contraseña.length()>7&& contraseña.length()<17)  Toast.makeText(getActivity(), resources.getString(R.string.ContraseñaIncorrecta), Toast.LENGTH_SHORT).show();
-                    else  Toast.makeText(getActivity(), resources.getString(R.string.NombreIncorrecto), Toast.LENGTH_SHORT).show();
-                    // guardarUsuario(nombre,contraseña,correo);
+                        mainActivity.mensajeCorrecto(vista, inflater,R.string.ContraseñaIncorrecta);
+                    else if(contraseña.length()>7&& contraseña.length()<17)mainActivity.mensajeCorrecto(vista, inflater,R.string.ContraseñaIncorrecta);
+                    else
+                        mainActivity.mensajeCorrecto(vista, inflater,R.string.CorreoIncorrecto);
+
             }
         });
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
@@ -80,7 +82,7 @@ public class FragmentRegistro extends Fragment {
     }
     private void obtenerUsuario(String nombre, String contraseña, String correo){
         apiUsuario apiUsuario = mainActivity.retrofit.create(com.example.gestioncliente.Conexión.apiUsuario.class);
-        Call< ArrayList<Usuario>> respuesta = apiUsuario.obtenerUsuarioNombre(nombre);
+        Call< ArrayList<Usuario>> respuesta = apiUsuario.obtenerUsuarioCorreo(correo);
         respuesta.enqueue(new Callback< ArrayList<Usuario>>() {
             @Override
             public void onResponse(Call<ArrayList<Usuario>> call, Response< ArrayList<Usuario>> response) {
@@ -108,6 +110,8 @@ public class FragmentRegistro extends Fragment {
         respuesta.enqueue(new Callback<Usuario>() {
             @Override
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                mainActivity.mensajeCorrecto(vista, layoutInflater, R.string.UsuarioCreado);
+
                 FragmentLogin fragment_login= new FragmentLogin(mainActivity);
                 mainActivity.cambiarFragment(fragment_login);
             }

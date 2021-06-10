@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/logo_gimnasio"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/quiensoy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/QuienSoy"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        style="@style/MargenTitulo"/>
+    <TextView
+        android:id="@+id/nombreUsuarioMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="shoy"
+        app:layout_constraintTop_toBottomOf="@+id/quiensoy"
+        android:textSize="32dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        style="@style/MargenTitulo"
+        />
+    <TextView
+        android:id="@+id/correoUsuarioMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/nombreUsuarioMenu"
+        style="@style/MargenTitulo"
+         />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintTop_toBottomOf="@+id/correoUsuarioMenu" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

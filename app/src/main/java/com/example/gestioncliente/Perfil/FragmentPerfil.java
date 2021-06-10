@@ -55,7 +55,7 @@ public class FragmentPerfil extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentObservaciones fragmentObservaciones = new FragmentObservaciones(actividadConUsuario);
-                actividadConUsuario.cambiarFragmento(fragmentObservaciones);
+                actividadConUsuario.cambiarFragmento(fragmentObservaciones, R.string.Observaciones);
             }
         });
         perfilAdapter.setOnItemClickListener(new View.OnClickListener() {
@@ -67,11 +67,11 @@ public class FragmentPerfil extends Fragment {
                 {
                     case 0:
                         FragmentIdiomas fragmentIdiomas = new FragmentIdiomas(actividadConUsuario);
-                        actividadConUsuario.cambiarFragmento(fragmentIdiomas);
+                        actividadConUsuario.cambiarFragmento(fragmentIdiomas, R.string.Idiomas);
                         break;
                     case 1:
                         FragmentConfigurarCuenta fragmentoConfigurarCuenta=new FragmentConfigurarCuenta(actividadConUsuario);
-                        actividadConUsuario.cambiarFragmento(fragmentoConfigurarCuenta);
+                        actividadConUsuario.cambiarFragmento(fragmentoConfigurarCuenta, R.string.Perfil);
                         break;
                     case 2:
                         Intent intent= new Intent(actividadConUsuario, MainActivity.class);
@@ -91,7 +91,7 @@ public class FragmentPerfil extends Fragment {
             @Override
             public void handleOnBackPressed() {
                 FragmentReservas fragmentReservas= new FragmentReservas(actividadConUsuario);
-                actividadConUsuario.cambiarFragmento(fragmentReservas);
+                actividadConUsuario.cambiarFragmento(fragmentReservas, R.string.Reservas);
                
                 // Handle the back button event
 

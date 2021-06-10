@@ -56,6 +56,8 @@ public class FragmentInstalaciones extends Fragment {
         Resources res = getResources();
         String[]tipos = res.getStringArray(R.array.TiposInstalaciones);
         Spinner FiltroTipoInstalaciones = vista.findViewById(R.id.FiltroTipoInstalaciones);
+        ArrayAdapter<String> tiposAdapter=new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item,tipos);
+        FiltroTipoInstalaciones.setAdapter(tiposAdapter);
         FiltroTipoInstalaciones.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -77,7 +79,7 @@ public class FragmentInstalaciones extends Fragment {
         instalaciónAdapter.setOnItemClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (actividadConUsuario.rol!=null & actividadConUsuario.rol.isRealiza_reserva()){
+                if (actividadConUsuario.rol!=null & actividadConUsuario.rol.isRealiza_reservas()){
                     instalacionPulsada= recyclerView.getChildAdapterPosition(v);
                     Instalación instalación =instalaciónAdapter.lista.get(instalacionPulsada);
                     seleccionarInstalacion(instalación);
@@ -154,7 +156,7 @@ public class FragmentInstalaciones extends Fragment {
             @Override
             public void handleOnBackPressed() {
                 FragmentReservas fragmentReservas= new FragmentReservas(actividadConUsuario);
-                actividadConUsuario.cambiarFragmento(fragmentReservas);
+                actividadConUsuario.cambiarFragmento(fragmentReservas, R.string.Reservas);
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
@@ -180,7 +182,7 @@ public class FragmentInstalaciones extends Fragment {
                             return -1;
                         }
                     });
-                    instalaciónAdapter.anyadirALista(listaInstalaciones);
+                    instalaciónAdapter.cambiarLista(listaInstalaciones);
                 }
             }
 
@@ -198,7 +200,7 @@ public class FragmentInstalaciones extends Fragment {
             public void onResponse(Call<ArrayList<Instalación>> call, Response<ArrayList<Instalación>> response) {
                 if (response.isSuccessful()){
                     ArrayList<Instalación>listaInstalaciones = response.body();
-                    instalaciónAdapter.anyadirALista(listaInstalaciones);
+                    instalaciónAdapter.cambiarLista(listaInstalaciones);
                 }
             }
 
@@ -212,7 +214,7 @@ public class FragmentInstalaciones extends Fragment {
         try{
         FragmentInstalacion fragmentInstalacion= new FragmentInstalacion(actividadConUsuario, this);
         fragmentInstalacion.instalación= instalacion;
-        actividadConUsuario.cambiarFragmento(fragmentInstalacion);
+        actividadConUsuario.cambiarFragmento(fragmentInstalacion, R.string.Instalacion);
     }catch (Exception ex)
         {
             System.out.println(ex.getMessage());

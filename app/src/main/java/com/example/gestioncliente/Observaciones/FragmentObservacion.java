@@ -47,7 +47,7 @@ public class FragmentObservacion extends Fragment {
             public void handleOnBackPressed() {
                 // Handle the back button event
                 FragmentObservaciones fragmentObservaciones = new FragmentObservaciones(actividadConUsuario);
-                actividadConUsuario.cambiarFragmento(fragmentObservaciones);
+                actividadConUsuario.cambiarFragmento(fragmentObservaciones, R.string.Observaciones);
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);

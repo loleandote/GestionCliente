@@ -55,7 +55,7 @@
     <string name="GuardarCambios">Save changes</string>
     <string-array name="TiposInstalaciones">
         <item>All</item>
-        <item>Tennis</item>
+        <item>Paddel</item>
         <item>Basketball</item>
     </string-array>
     <string name="NombreIncorrecto">Invalid name, it must be between 4 and 8 characters</string>
@@ -63,8 +63,18 @@
     <string name="ContraseñaIncorrecta">Invalid password, must between 8 and 16 characteres</string>
     <string name="FechaIncorrecta">The date mus be upper or equals to actual</string>
     <string name="Titulo">Title:</string>
-    <string name="Observacion">Observation:</string>
+    <string name="Observacion2">Observation:</string>
     <string name="ObservacionesDe">\'s observations</string>
     <string name="CreditosInsuficientes">You don\'t have enough monedos</string>
     <string name="ReservaRealizada">Booking done</string>
+    <string name="UsuarioCreado">Crated usser</string>
+    <string name="ReservaMinima">At least</string>
+    <string name="ResrvaMaxima">At most</string>
+    <string name="QuienSoy">Who am i?</string>
+    <string name="Dia2">Day:</string>
+    <string name="Instalacion">Facility</string>
+    <string name="Observaciones">Annotation</string>
+    <string name="Cuenta">Account</string>
+    <string name="Idiomas">Languajes</string>
+    <string name="Observacion">Observation</string>
 </resources>

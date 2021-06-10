@@ -58,6 +58,7 @@ public class FragmentInstalacion extends Fragment {
     private int mes;
     private int año;
     private Reserva reserva;
+    private LayoutInflater layoutInflater;
     private FragmentInstalaciones fragmentInstalaciones;
 
     public FragmentInstalacion() {
@@ -79,6 +80,7 @@ public class FragmentInstalacion extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         vista= inflater.inflate(R.layout.fragment_instalacion, container, false);
+        layoutInflater= inflater;
         reservasDia = new ArrayList<>();
         horaInicio=0;
         horaFin=0;
@@ -159,7 +161,7 @@ System.out.println(exception.getMessage());
             @Override
             public void handleOnBackPressed() {
                 // Handle the back button event
-                actividadConUsuario.cambiarFragmento(fragmentInstalaciones);
+                actividadConUsuario.cambiarFragmento(fragmentInstalaciones, R.string.Instalacion);
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
@@ -182,11 +184,9 @@ System.out.println(exception.getMessage());
                     );
                     double diferencia = Math.floor(diffInDays / (1000 * 3600 * 24));
                     diferencia = diferencia - 693987;
-
-
                     String mes2 = String.valueOf(mes);
                     String dia2 = String.valueOf(day);
-                    if (diferencia <= 14 && diferencia > 0) {
+                    if (diferencia <= 14 && diferencia > 1) {
                         horaInicio = 0;
                         horaFin = 0;
                         if (month + 1 < 10) {
@@ -206,7 +206,7 @@ System.out.println(exception.getMessage());
                         obtenerReservasDia();
                     } else
                          {
-                        Toast.makeText(getActivity(),actividadConUsuario.resources.getString(R.string.FechaIncorrecta), Toast.LENGTH_SHORT).show();
+                             actividadConUsuario.mensajeError(vista, layoutInflater, R.string.FechaIncorrecta,"");
                 }
 
 
@@ -237,21 +237,20 @@ System.out.println(exception.getMessage());
                }
            });
 
-        }else Toast.makeText(getActivity(), actividadConUsuario.resources.getString(R.string.CreditosInsuficientes), Toast.LENGTH_SHORT).show();
+        }else actividadConUsuario.mensajeError(vista,layoutInflater,R.string.CreditosInsuficientes,"" );
     }
 
     private void RealizarReserva(){
         apiReservas apiReservas = actividadConUsuario.retrofit.create(apiReservas.class);
         int diferencia = horaFin - horaInicio;
-        if (horaInicio>0 && horaFin>0&& diferencia > 0 && diferencia < 3) {
+        if (horaInicio>0 && horaFin>0&& diferencia <= instalación.getTiempo_max_reserva() && diferencia >= instalación.getTiempo_min_reserva()) {
             Call<Reserva> respuesta = apiReservas.guardaReserva(actividadConUsuario.usuario.getId(), instalación.getId(), instalación.getImagenes().get(0),instalación.getNombre(), dia,mes,año, horaInicio, horaFin, false, false, false,true);
             respuesta.enqueue(new Callback<Reserva>() {
                 @Override
                 public void onResponse(Call<Reserva> call, Response<Reserva> response) {
-                    Snackbar.make(vista, actividadConUsuario.resources.getString(R.string.ReservaRealizada), Snackbar.LENGTH_LONG)
-                            .show();
+                    actividadConUsuario.mensajeCorrecto(vista, layoutInflater,R.string.ReservaRealizada);
                     FragmentReservas fragmentReservas = new FragmentReservas(actividadConUsuario);
-                    actividadConUsuario.cambiarFragmento(fragmentReservas);
+                    actividadConUsuario.cambiarFragmento(fragmentReservas, R.string.Reservas);
                 }
 
                 @Override
@@ -259,6 +258,13 @@ System.out.println(exception.getMessage());
 
                 }
             });
+        }
+        else
+        {
+            if(diferencia > instalación.getTiempo_max_reserva())
+                actividadConUsuario.mensajeError(vista, layoutInflater, R.string.ReservaMinima,String.valueOf(instalación.getTiempo_min_reserva()));
+                else if(diferencia < instalación.getTiempo_min_reserva())
+                actividadConUsuario.mensajeError(vista, layoutInflater, R.string.ResrvaMaxima,String.valueOf(instalación.getTiempo_min_reserva()));
         }
     }
     private void obtenerReservasDia(){

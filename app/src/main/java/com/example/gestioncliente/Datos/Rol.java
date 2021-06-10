@@ -7,13 +7,18 @@ public class Rol {
     @SerializedName("id")
     @Expose
     private int id;
+    @SerializedName("rango_rol")
+    @Expose
+    private int rango_rol;
     @SerializedName("nombre_rol")
     @Expose
     private String nombre_rol;
-
     @SerializedName("realiza_reservas")
     @Expose
     private boolean realiza_reservas;
+    @SerializedName("realiza_reservas_otros")
+    @Expose
+    private boolean realiza_reservas_otros;
     @SerializedName("cancela_reserva")
     @Expose
     private boolean cancela_reserva;
@@ -29,28 +34,50 @@ public class Rol {
     @SerializedName("ver_grafico")
     @Expose
     private boolean ver_grafico;
-    @SerializedName("mod_contra_otros")
+    @SerializedName("mod_usuario_otros")
     @Expose
-    private boolean mod_contra_otros;
+    private boolean mod_usuario_otros;
     @SerializedName("mod_permiso")
     @Expose
     private boolean mod_permiso;
-    @SerializedName("expota_importa")
+    @SerializedName("exporta_importa")
     @Expose
-    private boolean expota_importa;
+    private boolean exporta_importa;
 
-    public Rol(int id, String nombre_rol, boolean realiza_reservas, boolean cancela_reserva, boolean modificar_usuario, boolean baja_socio, boolean realiza_informe, boolean ver_grafico, boolean mod_contra_otros, boolean mod_permiso, boolean expota_importa) {
+
+    public Rol() {
+    }
+
+    public Rol(int id, int rango_rol, String nombre_rol, boolean realiza_reservas, boolean realiza_reservas_otros, boolean cancela_reserva, boolean modificar_usuario, boolean baja_socio, boolean realiza_informe, boolean ver_grafico, boolean mod_usuario_otros, boolean mod_permiso, boolean exporta_importa) {
         this.id = id;
+        this.rango_rol = rango_rol;
         this.nombre_rol = nombre_rol;
         this.realiza_reservas = realiza_reservas;
+        this.realiza_reservas_otros = realiza_reservas_otros;
         this.cancela_reserva = cancela_reserva;
         this.modificar_usuario = modificar_usuario;
         this.baja_socio = baja_socio;
         this.realiza_informe = realiza_informe;
         this.ver_grafico = ver_grafico;
-        this.mod_contra_otros = mod_contra_otros;
+        this.mod_usuario_otros = mod_usuario_otros;
         this.mod_permiso = mod_permiso;
-        this.expota_importa = expota_importa;
+        this.exporta_importa = exporta_importa;
+    }
+
+    public boolean isRealiza_reservas() {
+        return realiza_reservas;
+    }
+
+    public void setRealiza_reservas(boolean realiza_reservas) {
+        this.realiza_reservas = realiza_reservas;
+    }
+
+    public boolean isRealiza_reservas_otros() {
+        return realiza_reservas_otros;
+    }
+
+    public void setRealiza_reservas_otros(boolean realiza_reservas_otros) {
+        this.realiza_reservas_otros = realiza_reservas_otros;
     }
 
     public int getId() {
@@ -67,15 +94,6 @@ public class Rol {
 
     public void setNombre_rol(String nombre_rol) {
         this.nombre_rol = nombre_rol;
-    }
-
-
-    public boolean isRealiza_reserva() {
-        return realiza_reservas;
-    }
-
-    public void setRealiza_reservas(boolean realiza_reservas) {
-        this.realiza_reservas = realiza_reservas;
     }
 
     public boolean isCancela_reserva() {
@@ -118,12 +136,12 @@ public class Rol {
         this.ver_grafico = ver_grafico;
     }
 
-    public boolean isMod_contra_otros() {
-        return mod_contra_otros;
+    public boolean ismod_usuario_otros() {
+        return mod_usuario_otros;
     }
 
-    public void setMod_contra_otros(boolean mod_contra_otros) {
-        this.mod_contra_otros = mod_contra_otros;
+    public void setmod_usuario_otros(boolean mod_usuario_otros) {
+        this.mod_usuario_otros = mod_usuario_otros;
     }
 
     public boolean isMod_permiso() {
@@ -134,11 +152,19 @@ public class Rol {
         this.mod_permiso = mod_permiso;
     }
 
-    public boolean isExpota_importa() {
-        return expota_importa;
+    public boolean isExporta_importa() {
+        return exporta_importa;
     }
 
-    public void setExpota_importa(boolean expota_importa) {
-        this.expota_importa = expota_importa;
+    public void setExporta_importa(boolean exporta_importa) {
+        this.exporta_importa = exporta_importa;
+    }
+
+    public int getRango_rol() {
+        return rango_rol;
+    }
+
+    public void setRango_rol(int rango_rol) {
+        this.rango_rol = rango_rol;
     }
 }

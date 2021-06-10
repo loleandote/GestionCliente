@@ -18,10 +18,10 @@ public interface apiUsuario {
 
     @GET("usuarios")
     Call<ArrayList<Usuario>> obtenerUsuario(@Query("id") int id_usuario);
+ /*   @GET("usuarios")
+    Call< ArrayList<Usuario>> obtenerUsuarioNombre(@Query("nombre_usuario") String nombre_usuario);*/
     @GET("usuarios")
-    Call< ArrayList<Usuario>> obtenerUsuarioNombre(@Query("nombre_usuario") String nombre_usuario);
-  /*  @GET("usuarios")
-    Call<ArrayList<Usuario>> obtenerUsuarioCorreo(@Query("correo_usuario") String correo_usuario);*/
+    Call<ArrayList<Usuario>> obtenerUsuarioCorreo(@Query("correo_usuario") String correo_usuario);
     @GET("usuarios")
     Call<ArrayList<Usuario>> obtenerUsuario(@Query("nombre_usuario") String nombre_usuario, @Query("contraseña_usuario") String contraseña,@Query("baja")boolean baja,@Query("penalizado") boolean penalizado,@Query("es_cliente") boolean esCliente);
     @GET("usuarios")

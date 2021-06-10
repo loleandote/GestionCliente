@@ -85,7 +85,7 @@ public class FragmentIdiomas extends Fragment {
             public void handleOnBackPressed() {
                 // Handle the back button event
                 FragmentPerfil fragmentPerfil = new FragmentPerfil(actividadConUsuario);
-                actividadConUsuario.cambiarFragmento(fragmentPerfil);
+                actividadConUsuario.cambiarFragmento(fragmentPerfil, R.string.Perfil);
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);

@@ -192,7 +192,7 @@ public class FragmentReservas extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentInstalaciones fragmentInstalaciones=new FragmentInstalaciones(actividadConUsuario);
-                actividadConUsuario.cambiarFragmento(fragmentInstalaciones);
+                actividadConUsuario.cambiarFragmento(fragmentInstalaciones,R.string.Instalaciones);
             }
         });
 
@@ -213,7 +213,7 @@ public class FragmentReservas extends Fragment {
     {
         FragmentReserva fragmentReserva = new FragmentReserva(actividadConUsuario, this);
         fragmentReserva.reserva= reserva;
-        actividadConUsuario.cambiarFragmento(fragmentReserva);
+        actividadConUsuario.cambiarFragmento(fragmentReserva, R.string.Reservas);
     }
     private void  obtenerDatos(){
 

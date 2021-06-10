@@ -18,12 +18,12 @@ public class Instalación {
     @SerializedName("precio_hora")
     @Expose
     private int precio_hora;
-    @SerializedName("tiempo_min")
+    @SerializedName("tiempo_min_reserva")
     @Expose
-    private int tiempo_min;
-    @SerializedName("tiempo_max")
+    private int tiempo_min_reserva;
+    @SerializedName("tiempo_max_reserva")
     @Expose
-    private int tiempo_max;
+    private int tiempo_max_reserva;
     @SerializedName("imagenes")
     @Expose
     private ArrayList<String> imagenes;
@@ -34,13 +34,13 @@ public class Instalación {
     public Instalación() {
     }
 
-    public Instalación(int id, int tipo, String nombre, int precio_hora, int tiempo_min, int tiempo_max, ArrayList<String> imagenes, ArrayList<Integer> horario) {
+    public Instalación(int id, int tipo, String nombre, int precio_hora, int tiempo_min_reserva, int tiempo_max_reserva, ArrayList<String> imagenes, ArrayList<Integer> horario) {
         this.id = id;
         this.tipo = tipo;
         this.nombre = nombre;
         this.precio_hora = precio_hora;
-        this.tiempo_min = tiempo_min;
-        this.tiempo_max = tiempo_max;
+        this.tiempo_min_reserva = tiempo_min_reserva;
+        this.tiempo_max_reserva = tiempo_max_reserva;
         this.imagenes = imagenes;
         this.horario = horario;
     }
@@ -77,20 +77,20 @@ public class Instalación {
         this.precio_hora = precio_hora;
     }
 
-    public int getTiempo_min() {
-        return tiempo_min;
+    public int getTiempo_min_reserva() {
+        return tiempo_min_reserva;
     }
 
-    public void setTiempo_min(int tiempo_min) {
-        this.tiempo_min = tiempo_min;
+    public void setTiempo_min(int tiempo_min_reserva) {
+        this.tiempo_min_reserva = tiempo_min_reserva;
     }
 
-    public int getTiempo_max() {
-        return tiempo_max;
+    public int getTiempo_max_reserva() {
+        return tiempo_max_reserva;
     }
 
-    public void setTiempo_max(int tiempo_max) {
-        this.tiempo_max = tiempo_max;
+    public void setTiempo_max(int tiempo_max_reserva) {
+        this.tiempo_max_reserva = tiempo_max_reserva;
     }
 
     public ArrayList<String> getImagenes() {

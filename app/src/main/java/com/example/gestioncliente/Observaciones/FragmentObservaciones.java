@@ -65,7 +65,7 @@ public class FragmentObservaciones extends Fragment {
                 int observaciónPulsada = recyclerView.getChildAdapterPosition(v);
                 Observación observación = observaciónAdapter.lista.get(observaciónPulsada);
                 FragmentObservacion fragmentObservacion= new FragmentObservacion(actividadConUsuario, observación);
-                actividadConUsuario.cambiarFragmento(fragmentObservacion);
+                actividadConUsuario.cambiarFragmento(fragmentObservacion, R.string.Observacion);
             }
         });
 
@@ -75,7 +75,7 @@ public class FragmentObservaciones extends Fragment {
             public void handleOnBackPressed() {
                 // Handle the back button event
                 FragmentPerfil fragmentPerfil = new FragmentPerfil(actividadConUsuario);
-                actividadConUsuario.cambiarFragmento(fragmentPerfil);
+                actividadConUsuario.cambiarFragmento(fragmentPerfil, R.string.Perfil);
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);

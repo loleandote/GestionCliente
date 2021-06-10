@@ -21,12 +21,8 @@
 -->
         <!-- Customize your theme here. -->
     </style>
+    <style name="MargenTitulo">
+        <item name="android:layout_marginLeft">15dp</item>
+    </style>
 
-    <!--<palette>
-        <color name='Diseño-gráfico-1' rgb='F2C53D' r='242' g='196' b='60' />
-        <color name='Diseño-gráfico-2' rgb='F2B33D' r='242' g='178' b='60' />
-        <color name='Diseño-gráfico-3' rgb='F2E2C4' r='242' g='226' b='196' />
-        <color name='Diseño-gráfico-4' rgb='F2A444' r='242' g='163' b='67' />
-        <color name='Diseño-gráfico-5' rgb='40352C' r='63' g='53' b='43' />
-    </palette>-->
 </resources>

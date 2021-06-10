@@ -56,7 +56,7 @@
     </string-array>.
     <string-array name="TiposInstalaciones">
         <item>Todos</item>
-        <item>Tenis</item>
+        <item>Paddel</item>
         <item>Baloncesto</item>
     </string-array>
     <!--Opciones nav Menu-->
@@ -70,7 +70,18 @@
     <string name="FechaIncorrecta">La fecha debe ser superior o igual a la actual</string>
     <string name="CreditosInsuficientes">No tienes suficientes monedos</string>
     <string name="Titulo">Titulo:</string>
-    <string name="Observacion">Observación:</string>
+    <string name="Observacion2">Observación:</string>
     <string name="ObservacionesDe">Observaciones de </string>
     <string name="ReservaRealizada">Reserva realizada</string>
+    <string name="UsuarioCreado">Usuario creado</string>
+    <string name="ReservaMinima">Como minimo</string>
+    <string name="ResrvaMaxima">Como máximo</string>
+    <string name="QuienSoy">¿Quién soy?</string>
+    <string name="Dia2">Día:</string>
+    <string name="Instalacion">Instalación</string>
+    <string name="Observaciones">Observaciones</string>
+    <string name="Cuenta">Cuenta</string>
+    <string name="Idiomas">Idiomas</string>
+    <string name="Observacion">Observación</string>
+
 </resources>

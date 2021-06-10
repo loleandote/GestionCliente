@@ -60,7 +60,7 @@ public class FragmentReserva extends Fragment {
                 //.centerCrop()
                 .into(imagenReserva);
         TextView fechaReserva = vista.findViewById(R.id.FechaResevaTextView);
-        String textoFecha = String.valueOf(reserva.getDia())+"-"+String.valueOf(reserva.getMes())+"-"+String.valueOf(reserva.getAño());
+        String textoFecha = String.valueOf(reserva.getDia())+"-"+String.valueOf(reserva.getMes())+"-"+String.valueOf(reserva.getAnyo());
         fechaReserva.setText(textoFecha);
         TextView fechaDesdeReserva = vista.findViewById(R.id.FechaDesdeTextView);
         fechaDesdeReserva.setText(String.valueOf(reserva.getHora_inicio())+":00");
@@ -78,7 +78,7 @@ public class FragmentReserva extends Fragment {
         cancelarReserva.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    Date fechaReserva=new Date(1900+reserva.getAño(), reserva.getMes(), reserva.getDia());
+                    Date fechaReserva=new Date(1900+reserva.getAnyo(), reserva.getMes(), reserva.getDia());
                     fechaReserva.setHours(reserva.getHora_inicio()-1);
                     Date fechaActual = new Date();
 System.out.println(fechaActual.toString());
@@ -94,7 +94,7 @@ System.out.println(fechaActual.before(fechaReserva));
                     @Override
                     public void onResponse(Call<Reserva> call, Response<Reserva> response) {
                         FragmentReservas fragmentReservas= new FragmentReservas(actividadConUsuario);
-                        actividadConUsuario.cambiarFragmento(fragmentReservas);
+                        actividadConUsuario.cambiarFragmento(fragmentReservas,R.string.Reservas);
                     }
 
                     @Override
@@ -117,7 +117,7 @@ System.out.println(fechaActual.before(fechaReserva));
         return vista;
     }
     private void volverAReservas(){
-        actividadConUsuario.cambiarFragmento(fragmentReservas);
+        actividadConUsuario.cambiarFragmento(fragmentReservas, R.string.Reservas);
     }
 
 }

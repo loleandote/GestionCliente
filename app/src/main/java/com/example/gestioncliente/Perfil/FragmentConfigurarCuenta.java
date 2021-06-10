@@ -61,7 +61,7 @@ public class FragmentConfigurarCuenta extends Fragment {
                        if (response.isSuccessful()){
                            actividadConUsuario.usuario= response.body();
                            FragmentPerfil fragmentPerfil= new FragmentPerfil(actividadConUsuario);
-                           actividadConUsuario.cambiarFragmento(fragmentPerfil);
+                           actividadConUsuario.cambiarFragmento(fragmentPerfil, R.string.Perfil);
                        }
                    }
 
@@ -77,7 +77,7 @@ public class FragmentConfigurarCuenta extends Fragment {
             public void handleOnBackPressed() {
                 // Handle the back button event
                 FragmentPerfil fragmentPerfil = new FragmentPerfil(actividadConUsuario);
-                actividadConUsuario.cambiarFragmento(fragmentPerfil);
+                actividadConUsuario.cambiarFragmento(fragmentPerfil, R.string.Perfil);
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
