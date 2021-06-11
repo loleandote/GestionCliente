@@ -45,6 +45,7 @@ public class FragmentObservaciones extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        String hola= "HOla";
         vista= inflater.inflate(R.layout.fragment_observaciones, container, false);
         TextView TituloDeLasObservaciones= vista.findViewById(R.id.TituloDeLasObservaciones);
         Resources res = getResources();
