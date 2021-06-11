@@ -38,6 +38,7 @@ public class FragmentObservaciones extends Fragment {
 
     public FragmentObservaciones(ActividadConUsuario actividadConUsuario) {
         this.actividadConUsuario = actividadConUsuario;
+
     }
 
     @Override

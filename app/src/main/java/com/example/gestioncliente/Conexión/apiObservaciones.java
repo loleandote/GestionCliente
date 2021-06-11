@@ -10,6 +10,8 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface apiObservaciones {
+    //Observa la observación
+
     @GET("observaciones")
     Call<ArrayList<Observación>> obtenerObservacionesUsuario(@Query("id_usuario")int id_usuario);
 
